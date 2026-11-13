@@ -325,3 +325,17 @@
   .showcase-actions { gap: 8px 20px; }
   .case-top-actions { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
+
+@media screen and (max-width: 760px) {
+  .mnemos-gallery { margin-top: 49px; }
+  .mnemos-gallery-grid {
+    display: flex; overflow-x: auto; overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory; gap: 13px;
+    padding: 0 12px 13px 0;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mnemos-gallery-item { flex: 0 0 min(68vw, 280px); scroll-snap-align: start; }
+  .mnemos-gallery-item a:hover { transform: none; }
+  .mnemos-gallery-head h3 { font-size: 31px; }
+}

@@ -9,6 +9,9 @@ const stories = readFileSync('src/data/stories.ts', 'utf8');
 test('all public visual assets are committed and nonempty', () => {
   for (const path of [
     'public/media/mnemos/home.webp',
+    'public/media/mnemos/wallet.webp', 'public/media/mnemos/events-global.webp',
+    'public/media/mnemos/events-drops.webp', 'public/media/mnemos/rankings.webp',
+    'public/media/mnemos/profile.webp',
     'public/media/studium/student.png', 'public/media/studium/teacher.png',
     'public/media/studium/admin.png', 'public/media/wavecode/example.svg',
     'public/media/wavecode/mark.svg'

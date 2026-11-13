@@ -73,10 +73,10 @@ try {
         )) throw Error('Mobile project card order is incorrect: ' + name + ' ' + JSON.stringify(placements));
 
         const liveHref = await page.locator('.showcase-item').nth(1).locator('.showcase-art').getAttribute('href');
-        if (liveHref !== 'https://wavecode.knalis.rest/') throw Error('WaveCode card does not directly open the application');
+        if (liveHref !== '/en/work/wavecode/' && liveHref !== '/uk/work/wavecode/') throw Error('WaveCode card must open its case before the scanner');
 
         const mnemosBackground = await page.locator('.project-art--mnemos').first().evaluate(el => getComputedStyle(el).backgroundColor);
-        if (mnemosBackground !== 'rgb(237, 237, 237)') throw Error('Mnemos cover is not neutral: ' + mnemosBackground);
+        if (mnemosBackground !== 'rgb(22, 22, 22)') throw Error('Mnemos cover should match C7x charcoal: ' + mnemosBackground);
 
         await page.evaluate(() => {
           document.documentElement.style.scrollBehavior = 'auto';

@@ -469,3 +469,18 @@ button { font: inherit; cursor: pointer; }
   .new-hero-foot { margin-top: 40px; align-items: flex-start; }
   .new-hero-foot p { max-width: 560px; }
 }
+
+/* Mnemos gallery: editorial frame with genuine in-app screenshots. */
+.mnemos-gallery { margin-top: 65px; min-width: 0; }
+.mnemos-gallery-head { margin-bottom: 25px; }
+.mnemos-gallery-head h3 { margin-top: 12px; font-size: clamp(27px, 3vw, 39px); letter-spacing: -.055em; }
+.mnemos-gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 19px; }
+.mnemos-gallery-item { min-width: 0; }
+.mnemos-gallery-item a {
+  display: block; overflow: hidden; background: #141914;
+  border: 1px solid var(--line);
+  transition: border-color .2s ease, transform .25s var(--ease);
+}
+.mnemos-gallery-item a:hover { transform: translateY(-3px); border-color: var(--ink); }
+.mnemos-gallery-item img { display: block; width: 100%; height: auto; aspect-ratio: 430 / 813; object-fit: cover; }
+.mnemos-gallery-item figcaption { padding: 12px 0 3px; font-size: 13px; font-weight: 600; letter-spacing: -.01em; color: var(--ink); }

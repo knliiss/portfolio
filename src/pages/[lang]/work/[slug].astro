@@ -22,6 +22,14 @@ const next = projects[(index + 1) % projects.length];
 const nextName = ({ mnemos: 'Mnemos', wavecode: 'WaveCode', c7xbotmanager: 'C7xBotManager', studium: 'Studium' } as const)[next.slug];
 const route = lang + '/work/' + project.slug + '/';
 const isPublic = project.slug === 'wavecode' || project.slug === 'studium';
+
+const mnemosScreens = [
+  { file: 'events-global', en: 'Global events', uk: 'Глобальні події', altEn: 'Global-event feed and filters', altUk: 'Стрічка глобальних подій та фільтри' },
+  { file: 'events-drops', en: 'Item drops', uk: 'Дропи', altEn: 'Item drops and player activity', altUk: 'Дропи та активність гравців' },
+  { file: 'rankings', en: 'Leaderboards', uk: 'Рейтинг', altEn: 'Wipe leaderboards and coin balances', altUk: 'Рейтинг і баланс монет' },
+  { file: 'profile', en: 'Player profile', uk: 'Профіль гравця', altEn: 'Online status, SAO realm and recent drops', altUk: 'Онлайн-стан, SAO-реалм та останні дропи' },
+  { file: 'wallet', en: 'Wallet', uk: 'Гаманець', altEn: 'Coin exchange and account balance', altUk: 'Обмін монет і баланс акаунта' },
+];
 const galleryLabels = isUk ? ['Кабінет викладача', 'Кабінет адміністратора'] : ['Teacher workspace', 'Administrator workspace'];
 const introductionHeadings = {
   mnemos: { en: 'Realtime events and everything around them', uk: 'Події, підписки та інші функції Mnemos' },
@@ -80,6 +88,26 @@ import ArrowIcon from '../../../components/ArrowIcon.astro';
                 <a href={pathFor('media/mnemos/home.webp')} target="_blank" rel="noopener noreferrer" class="text-link">{isUk ? 'Відкрити скриншот' : 'View full screenshot'} <ArrowIcon direction="up-right" /></a>
               </figcaption>
             </figure>
+          )}
+          {project.slug === 'mnemos' && (
+            <div class="mnemos-gallery">
+              <div class="mnemos-gallery-head">
+                <span class="eyebrow">{isUk ? 'Інтерфейс' : 'Product screens'}</span>
+                <h3>{isUk ? 'Основні розділи' : 'Across the application'}</h3>
+              </div>
+              <div class="mnemos-gallery-grid" aria-label={isUk ? 'Скриншоти застосунку Mnemos' : 'Mnemos product screenshots'}>
+                {mnemosScreens.map(screen => (
+                  <figure class="mnemos-gallery-item">
+                    <a href={pathFor('media/mnemos/' + screen.file + '.webp')} target="_blank" rel="noopener noreferrer"
+                       aria-label={(isUk ? screen.uk : screen.en) + (isUk ? ' — відкрити скриншот' : ' — open screenshot')}>
+                      <img src={pathFor('media/mnemos/' + screen.file + '.webp')} alt={isUk ? screen.altUk : screen.altEn}
+                           loading="lazy" decoding="async" width="430" height="813" />
+                    </a>
+                    <figcaption>{isUk ? screen.uk : screen.en}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </section>

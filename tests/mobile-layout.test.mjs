@@ -16,12 +16,13 @@ test('mobile project previews place heading before artwork and details below it'
   assert.match(home, /class="showcase-summary"/);
   assert.match(home, /class="showcase-details"/);
 });
-test('WaveCode card directly opens the live tool while preserving a case-study link', () => {
-  assert.match(home, /const mainUrl = liveUrl \?\? link/);
-  assert.match(home, /href=\{liveUrl\} target="_blank"/);
-  assert.match(home, /class="text-link showcase-secondary-link" href=\{link\}/);
+test('WaveCode image and title open its portfolio case before the external scanner', () => {
+  assert.match(home, /const mainUrl = link/);
+  assert.match(home, /class="showcase-art" href=\{link\}/);
+  assert.match(home, /<h3><a href=\{link\}>\{label\}<\/a><\/h3>/);
+  assert.match(home, /class="text-link showcase-secondary-link" href=\{liveUrl\}/);
 });
 test('Mnemos cover is neutral and the screenshot is not filtered or recolored', () => {
-  assert.match(global, /\.project-art--mnemos \{\s*background: #ededed;\s*color: #171717;/);
+  assert.match(global, /\.project-art--mnemos,\.project-art--c7x \{ background: #161616;/);
   assert.doesNotMatch(global, /\.mnemos-device img[^}]*filter:/);
 });
