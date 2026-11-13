@@ -445,3 +445,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
     }
   }
 };
+
+export function narrativeFor(slug: ProjectSlug, lang: Language): Narrative {
+  return narratives[slug][lang];
+}
