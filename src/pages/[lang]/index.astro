@@ -53,7 +53,6 @@ import ArrowIcon from '../../components/ArrowIcon.astro';
           const label = projectName(project.slug);
           const link = pathFor(lang + '/work/' + project.slug + '/');
           const liveUrl = project.slug === 'wavecode' ? project.live : undefined;
-          const mainUrl = link;
           return (
             <article class="showcase-item">
               <a class="showcase-art" href={link} aria-label={label + ' — ' + copy.viewWork}>

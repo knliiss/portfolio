@@ -17,7 +17,6 @@ test('mobile project previews place heading before artwork and details below it'
   assert.match(home, /class="showcase-details"/);
 });
 test('WaveCode image and title open its portfolio case before the external scanner', () => {
-  assert.match(home, /const mainUrl = link/);
   assert.match(home, /class="showcase-art" href=\{link\}/);
   assert.match(home, /<h3><a href=\{link\}>\{label\}<\/a><\/h3>/);
   assert.match(home, /class="text-link showcase-secondary-link" href=\{liveUrl\}/);
