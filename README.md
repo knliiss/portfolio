@@ -1,40 +1,68 @@
 # Vitalii Lototskyi · Portfolio
 
-Editorial, bilingual portfolio for a software engineer. Built with **Astro 6 + TypeScript**, static-first HTML, and deliberately minimal client-side JavaScript.
+Editorial, bilingual portfolio for a software engineer. Built with **Astro + TypeScript**, static-first HTML, and minimal client-side JavaScript.
 
 ## Pages
 
-- English and Ukrainian landing pages: /en/ and /uk/
-- Four full engineering case studies per language: Mnemos, WaveCode, C7xBotManager, Studium
-- Printable, accessible resume pages for both languages
+- English and Ukrainian landing pages: `/en/` and `/uk/`
+- Four engineering case studies per language: Mnemos, WaveCode, C7xBotManager, Studium
+- Printable resume pages in both languages
 - Minimal dark/light theme switch, no tracking, no backend
 
 ## Development
 
 Requires Node.js 22.23.4+.
 
-    npm install
-    npm run check
-    npm run test
-    npm run build
-    npm run dev
+```sh
+npm install
+npm run check
+npm run test
+npm run build
+npm run dev
+```
 
-## Deployment
+## Cloudflare Pages deployment
 
-Builds to a static dist/ directory. Deploy it to a static hosting service (Cloudflare, GitHub Pages, etc.). Set SITE_URL to the final public domain and BASE_PATH to the hosting path, then build.
+This project is hosted as a **Cloudflare Pages** project on the custom subdomain **portfolio.knalis.rest**. It is a static site, not a Worker and not an origin server behind a Cloudflare Tunnel.
 
-The project deliberately does not assume ownership of a custom domain. Before production, set the actual URL to produce correct canonical/hreflang/OG metadata. To enable sitemap generation, configure Astro's sitemap integration at deployment.
+For the existing Pages project `portfolio` (the assigned `*.pages.dev` hostname may vary), use **Settings → Builds & deployments**:
+
+| Setting | Value |
+| --- | --- |
+| Framework preset | `Astro` |
+| Production branch | `main` |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | repository root / empty |
+| Node.js | `22.23.4` (also pinned via `.nvmrc`) |
+
+`SITE_URL` defaults to `https://portfolio.knalis.rest` and `BASE_PATH` to `/`. No extra build-time environment variables are required for a production build at the custom-domain root.
+
+**Troubleshooting a green deployment with HTTP 404:** Open the generated `*.pages.dev` production URL first. Verify the deployment logs show the Astro build and that the build output `dist/` was uploaded. Both `dist/index.html` and `dist/en/index.html` must exist. A successful Pages deployment does not guarantee the correct output directory was published; fix the Pages build command and output settings and redeploy.
+
+**Custom domain:** Add `portfolio.knalis.rest` from **Pages → Custom domains** (not just DNS). In the `knalis.rest` DNS zone keep the CNAME `portfolio` pointing to the Pages project's actual `*.pages.dev` hostname. The status must be **Active**, not **Verifying**, before treating the hostname as available. Do not redirect it to a VPS or configure a Tunnel for a static Pages app. If it stays Verifying, check whether Access/Workers/Redirect Rules or certificate validation policies block `/.well-known/acme-challenge/*`.
+
+**Test URLs after redeploy:**
+
+- `https://portfolio-1bt.pages.dev/`
+- `https://portfolio-1bt.pages.dev/en/`
+- `https://portfolio.knalis.rest/`
+- `https://portfolio.knalis.rest/en/`
+
+All should serve the site; the root HTML navigates visitors to the English version.
+
+The separate GitHub Actions job checks the code and builds `dist`, but **it does not deploy to Cloudflare Pages**. Cloudflare Pages Git integration performs the production deployment using its own dashboard settings.
 
 ## Content
 
-Case studies and both localizations live in src/data/content.ts. All figures are intentionally qualified rather than exaggerated. Product photography is linked from the author's own public GitHub repositories, while the C7xBotManager visual is a CSS/SVG diagram generated for this portfolio—not a fabricated product screenshot. Links and artifacts can be revised through the typed content data.
+Project stories and both localizations live in `src/data/content.ts`. Product screenshots are linked from public assets in the author's other repositories. C7xBotManager uses a conceptual SVG diagram, not a fabricated product screenshot.
 
-The resume sections are HTML and print-friendly, so visitors can open and save them as a PDF without a hosted form service. To add downloadable pre-rendered PDF files later, place them in public/cv/ and update the resume actions.
+The resume pages are print-friendly HTML. Use the browser print command to export a PDF. Downloadable pre-rendered CV files can be added under `public/cv/` later.
 
 ## Privacy and performance
 
-No cookies, trackers, analytics scripts, or remote fonts. The only JavaScript running on static pages handles color theme persistence. Images use lazy loading where appropriate.
+No cookies, trackers or remote fonts. Theme preference is stored locally in the browser. Static pages require no backend.
 
 ## Accuracy
 
-Project descriptions are based on implementation details of the repositories; usage figures and awards are based on the author's confirmed statements. No runtime benchmark or employer affiliation is implied.
+Project descriptions are grounded in implementation details; usage figures and awards are based on the author's statements. No runtime benchmark or employer affiliation is implied.
