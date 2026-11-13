@@ -27,7 +27,7 @@ for (const file of required) {
 }
 
 const en = await readFile(resolve(root, 'en/index.html'), 'utf8');
-if (!en.includes('I build software products and backend systems.')) {
+if (!en.includes('Backend systems. Software products.')) {
   throw new Error('Incorrect English homepage generated.');
 }
 
