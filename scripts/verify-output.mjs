@@ -1,4 +1,5 @@
-import { stat, readFile } from 'node:fs/promises';
+import { stat, readFile, writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
 
 const root = resolve('dist');
@@ -32,3 +33,23 @@ if (!en.includes('Backend systems. Software products.')) {
 }
 
 console.log('[pages-output] All required production assets are present in: ' + root);
+
+function currentCommit() {
+  for (const value of [process.env.CF_PAGES_COMMIT_SHA, process.env.GITHUB_SHA]) {
+    if (value && /^[a-f0-9]{7,40}$/i.test(value)) return value;
+  }
+  try {
+    return execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+  } catch {
+    return 'unknown';
+  }
+}
+
+const build = {
+  commit: currentCommit(),
+  builtAt: new Date().toISOString(),
+  site: 'portfolio.knalis.rest',
+  source: 'knliiss/portfolio'
+};
+await writeFile(resolve(root, '__build.json'), JSON.stringify(build, null, 2) + '\n', 'utf8');
+console.log('[pages-output] Deployment marker: ' + build.commit + ', built ' + build.builtAt);
