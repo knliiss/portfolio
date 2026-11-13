@@ -24,7 +24,11 @@ try {
     const exceptions = [];
     page.on('pageerror', error => exceptions.push(error.message));
     const response = await page.goto(origin + route, { waitUntil: 'load', timeout: 20000 });
-    await page.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode().catch(() => undefined))));
+    await page.locator('img').evaluateAll(images => images.forEach(image => { image.loading = 'eager'; }));
+    await Promise.race([
+      page.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode().catch(() => undefined)))),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Image decoding timeout: ' + name)), 12000))
+    ]);
     const result = await page.evaluate(() => ({
       bodyWidth: document.body.scrollWidth,
       documentWidth: document.documentElement.scrollWidth,

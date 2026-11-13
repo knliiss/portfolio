@@ -1,4 +1,5 @@
 name: Visual quality audit
+# Images are explicitly loaded before checking screenshots.
 on:
   push:
     paths:
