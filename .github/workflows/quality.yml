@@ -20,3 +20,8 @@ jobs:
         env:
           SITE_URL: https://knliiss.github.io
           BASE_PATH: /
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-static-site
+          path: dist/
+          if-no-files-found: error
