@@ -372,3 +372,52 @@ button { font: inherit; cursor: pointer; }
   .resume-block { break-inside: avoid; margin-bottom: 8px; }
   .resume-paper a { text-decoration: none; }
 }
+
+
+/* Real Mnemos screenshot and expanded engineering case studies. */
+.project-art--mnemos { background: #111710; }
+.mnemos-visual-body { display: grid; grid-template-columns: minmax(0,1fr) minmax(140px,.85fr); gap: 16px; align-items: center; flex: 1; min-height: 0; overflow: hidden; padding-top: 20px; }
+.mnemos-visual-copy { align-self: center; display: flex; flex-direction: column; min-width: 0; gap: 13px; }
+.mnemos-visual-copy strong { display: block; font-size: clamp(38px,5.1vw,73px); line-height: 1; letter-spacing: -.075em; font-weight: 600; overflow-wrap: anywhere; }
+.mnemos-visual-tag { font: 700 10px/1.5 Consolas,monospace; color: #c9d6b6; letter-spacing: .07em; }
+.mnemos-visual-footnote { font-size: 13px; color: #c9d6b6; }
+.mnemos-device { position: relative; align-self: end; width: 100%; max-width: 240px; height: 330px; margin: 0 auto -35px; border-radius: 20px 20px 0 0; border: 2px solid #4b5649; background: #10140d; box-shadow: -16px -14px 42px #0004; overflow: hidden; }
+.mnemos-device-top { display: flex; align-items: center; justify-content: center; gap: 5px; height: 23px; border-bottom: 1px solid #344033; color: #c0ccab; font: 700 9px/1 Consolas,monospace; letter-spacing: .1em; }
+.mnemos-device-top i { width: 4px; height: 4px; background: #7b866e; border-radius: 50%; }
+.mnemos-device-top span { margin-left: 6px; }
+.mnemos-device img { display: block; width: 100%; height: auto; border: 0; }
+.project-art--detail .mnemos-visual-body { grid-template-columns: minmax(0,1fr) minmax(240px,.72fr); padding: 20px 5% 0; }
+.project-art--detail .mnemos-visual-copy strong { font-size: clamp(64px,10vw,118px); }
+.project-art--detail .mnemos-device { max-width: 330px; height: 510px; margin-bottom: -55px; }
+.contribution-list { list-style: none; padding: 0; margin: 39px 0 0; border-top: 1px solid var(--line); }
+.contribution-list li { position: relative; padding: 22px 0 22px 33px; border-bottom: 1px solid var(--line); font-size: clamp(15px,1.35vw,18px); line-height: 1.65; color: var(--ink); }
+.contribution-list li::before { content: "↗"; position: absolute; left: 0; top: 21px; font-size: 17px; }
+.engineering-notes { border-top: 1px solid var(--line); margin-top: 44px; }
+.engineering-note { display: grid; grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr); gap: clamp(20px,4vw,50px); border-bottom: 1px solid var(--line); padding: 34px 0; }
+.engineering-note-head { display: flex; flex-direction: column; gap: 18px; }
+.engineering-note-head h3 { font-size: clamp(22px,2.3vw,31px); letter-spacing: -.04em; line-height: 1.2; }
+.engineering-note-text p { margin: 0 0 16px; color: var(--muted); line-height: 1.78; font-size: 15px; }
+.engineering-note-text p:last-child { margin-bottom: 0; }
+.mnemos-capture { margin: 58px 0 0; padding: clamp(20px,4vw,38px); display: grid; grid-template-columns: minmax(230px,.85fr) minmax(0,1fr); gap: clamp(25px,5vw,58px); align-items: center; background: #111710; color: #f6f6ee; }
+.mnemos-capture-image { display: flex; justify-content: center; align-items: flex-start; overflow: hidden; }
+.mnemos-capture-image img { width: 100%; height: auto; max-width: 360px; border-radius: 14px; }
+.mnemos-capture figcaption .eyebrow { color: #bacba8; }
+.mnemos-capture figcaption h3 { font-size: clamp(23px,2.8vw,36px); margin-top: 18px; }
+.mnemos-capture figcaption p { margin-top: 22px; color: #d7dfd0; font-size: 15px; line-height: 1.7; }
+.mnemos-capture figcaption .text-link { margin-top: 27px; color: #f5f6f0; }
+@media(max-width:850px) {
+  .engineering-note { grid-template-columns: 1fr; gap: 20px; }
+  .engineering-note-head { gap: 9px; }
+  .mnemos-capture { grid-template-columns: 1fr; }
+  .mnemos-capture-image { max-height: 680px; }
+}
+@media(max-width:520px) {
+  .mnemos-visual-body { grid-template-columns: minmax(0,.9fr) minmax(130px,1.1fr); gap: 8px; }
+  .mnemos-visual-copy strong { font-size: 35px; }
+  .mnemos-visual-tag,.mnemos-visual-footnote { font-size: 9px; }
+  .mnemos-device { max-width: 170px; height: 240px; margin-bottom: -25px; border-radius: 12px 12px 0 0; }
+  .project-art--detail .mnemos-visual-body { grid-template-columns: minmax(0,.85fr) minmax(140px,1.15fr); padding: 16px 0 0; }
+  .project-art--detail .mnemos-visual-copy strong { font-size: 39px; }
+  .project-art--detail .mnemos-device { height: 315px; max-width: 210px; margin-bottom: -25px; }
+  .mnemos-capture-image { max-height: none; }
+}

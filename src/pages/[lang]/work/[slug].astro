@@ -56,6 +56,19 @@ const resultLabel = isUk ? 'Результат' : 'Outcome';
         <div class="chapter-body">
           <h2 id="chapter-overview">{isUk ? 'Як з’явився проєкт' : 'The project'}</h2>
           {story.introduction.map((paragraph, i) => <p class={i === 0 ? 'chapter-lead' : ''}>{paragraph}</p>)}
+          {project.slug === 'mnemos' && (
+            <figure class="mnemos-capture">
+              <div class="mnemos-capture-image">
+                <img src={pathFor('media/mnemos/home.webp')} width="480" height="891" loading="lazy" decoding="async" alt={isUk ? 'Справжній головний екран Mnemos: активний акаунт, події, нагороди, гаманець, команда та активність' : 'Actual Mnemos home screen showing account, live events, rewards, wallet, team and activity'} />
+              </div>
+              <figcaption>
+                <span class="eyebrow">{isUk ? 'Інтерфейс продукту' : 'Product interface'}</span>
+                <h3>{isUk ? 'Головна сторінка акаунта' : 'Account home'}</h3>
+                <p>{isUk ? 'На цьому екрані об’єднані поточний акаунт, глобальні події, щоденні нагороди, баланс, члени команди й остання активність. Ці розділи працюють із даними різних сервісів Mnemos.' : 'This screen brings together the active account, global events, daily rewards, wallet balance, team members and recent activity. Those sections are backed by different parts of the Mnemos platform.'}</p>
+                <a href={pathFor('media/mnemos/home.webp')} target="_blank" rel="noopener noreferrer" class="text-link">{isUk ? 'Відкрити скриншот' : 'View full screenshot'} <span aria-hidden="true">↗</span></a>
+              </figcaption>
+            </figure>
+          )}
         </div>
       </section>
 
