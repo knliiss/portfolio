@@ -287,3 +287,11 @@
   .project-art--c7x .c7x-layer small { font-size: 11px; }
   .case-next-copy { min-width: 0; }
 }
+
+@media screen and (max-width: 900px) {
+  .mobile-menu summary:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 1px;
+    border-color: transparent;
+  }
+}
