@@ -458,3 +458,14 @@ button { font: inherit; cursor: pointer; }
 .showcase-actions { display: flex; gap: 12px 23px; flex-wrap: wrap; align-items: center; }
 .showcase-secondary-link { color: var(--muted); }
 .case-top-actions { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px 22px; }
+
+/* Consistent alternating monochrome covers and a composed editorial hero. */
+.project-art--mnemos,.project-art--c7x { background: #161616; color: #f6f6f6; }
+.project-art--mnemos .mnemos-visual-tag,.project-art--mnemos .mnemos-visual-footnote { color: #bcbcbc; }
+.project-art--mnemos .mnemos-device { border-color: #424242; }
+@media screen and (min-width: 901px) {
+  .new-hero { grid-template-columns: 190px minmax(0,1fr); gap: 34px; padding: clamp(64px,7vw,108px) 0 83px; }
+  .new-hero-body h1 { max-width: 870px; font-size: clamp(3.7rem,5.7vw,6rem); letter-spacing: -.065em; line-height: 1.08; text-wrap: balance; overflow-wrap: normal; }
+  .new-hero-foot { margin-top: 40px; align-items: flex-start; }
+  .new-hero-foot p { max-width: 560px; }
+}

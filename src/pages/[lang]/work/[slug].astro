@@ -30,7 +30,7 @@ const introductionHeadings = {
   studium: { en: 'An LMS with distinct student and teacher workflows', uk: 'Навчальна платформа для різних ролей' }
 };
 const overviewLabel = isUk ? 'Про проєкт' : 'About the project';
-const contributionLabel = isUk ? 'Моя робота' : 'My contribution';
+const contributionLabel = isUk ? 'Реалізація' : 'Implementation';
 const flowLabel = isUk ? 'Приклад реалізації' : 'A closer look';
 const engineeringLabel = isUk ? 'Технічні рішення' : 'Implementation details';
 const resultLabel = isUk ? 'Результат' : 'Outcome';
@@ -87,7 +87,7 @@ import ArrowIcon from '../../../components/ArrowIcon.astro';
       <section class="chapter" aria-labelledby="chapter-contribution">
         <span class="chapter-index">{contributionLabel}</span>
         <div class="chapter-body">
-          <h2 id="chapter-contribution">{isUk ? 'Що я розробив' : 'What I worked on'}</h2>
+          <h2 id="chapter-contribution">{isUk ? 'Ключові компоненти' : 'Key components'}</h2>
           <ul class="contribution-list">
             {story.responsibilities.map(point => <li>{point}</li>)}
           </ul>
@@ -162,7 +162,7 @@ import ArrowIcon from '../../../components/ArrowIcon.astro';
       <section class="chapter" aria-labelledby="chapter-result">
         <span class="chapter-index">{resultLabel}</span>
         <div class="chapter-body">
-          <h2 id="chapter-result">{isUk ? 'Що вийшло' : 'Where it stands'}</h2>
+          <h2 id="chapter-result">{isUk ? 'Результат' : 'Current outcome'}</h2>
           {story.outcome.map((paragraph, i) => <p class={i === 0 ? 'chapter-lead' : ''}>{paragraph}</p>)}
           <div class="case-external-links">
             {isPublic && <a href={project.repo} class="button" target="_blank" rel="noopener noreferrer">{t.openSource} <ArrowIcon direction="up-right" /></a>}

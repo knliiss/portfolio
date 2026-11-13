@@ -22,7 +22,7 @@ import ArrowIcon from '../../components/ArrowIcon.astro';
         <span class="small muted">{isUk ? 'Незалежна розробка продуктів' : 'Independent product engineering'}</span>
       </div>
       <div class="new-hero-body">
-        <h1 id="main-title">{isUk ? 'Розробляю програмні продукти та backend-системи.' : 'I build software products and backend systems.'}</h1>
+        <h1 id="main-title">{isUk ? 'Backend-системи. Програмні продукти.' : 'Backend systems. Software products.'}</h1>
         <div class="new-hero-foot">
           <p>{copy.intro}</p>
           <div class="new-hero-actions">
@@ -44,7 +44,7 @@ import ArrowIcon from '../../components/ArrowIcon.astro';
         <span class="eyebrow">{copy.featuredLabel}</span>
         <div>
           <h2 id="work-title">{isUk ? 'Мої проєкти.' : 'Selected projects.'}</h2>
-          <p class="section-description">{isUk ? 'Платформа подій, бібліотека оптичних кодів, десктопний менеджер і навчальна система. На сторінках проєктів описав реалізацію та технічні рішення.' : 'A live-event platform, an optical-code library, a desktop manager and a learning system. I’ve documented how each works and what I built.'}</p>
+          <p class="section-description">{isUk ? 'Розподілені сервіси, оптичний формат для медіа, мережевий runtime і навчальна платформа. Кожен кейс містить реалізацію, архітектуру та результат.' : 'Distributed services, an optical media format, a concurrent network runtime and a learning platform. Each case covers architecture, implementation and outcome.'}</p>
         </div>
       </header>
       <div class="showcase-list">
@@ -53,24 +53,24 @@ import ArrowIcon from '../../components/ArrowIcon.astro';
           const label = projectName(project.slug);
           const link = pathFor(lang + '/work/' + project.slug + '/');
           const liveUrl = project.slug === 'wavecode' ? project.live : undefined;
-          const mainUrl = liveUrl ?? link;
+          const mainUrl = link;
           return (
             <article class="showcase-item">
-              <a class="showcase-art" href={mainUrl} target={liveUrl ? '_blank' : undefined} rel={liveUrl ? 'noopener noreferrer' : undefined} aria-label={liveUrl ? (isUk ? 'Відкрити WaveCode Scanner' : 'Open WaveCode Scanner') : label + ' — ' + copy.viewWork}>
+              <a class="showcase-art" href={link} aria-label={label + ' — ' + copy.viewWork}>
                 <ProjectVisual project={project} />
               </a>
               <div class="showcase-info">
                 <div class="showcase-summary">
                   <span class="eyebrow">{project.order} / {project.copy[lang].category}</span>
-                  <h3><a href={mainUrl} target={liveUrl ? '_blank' : undefined} rel={liveUrl ? 'noopener noreferrer' : undefined}>{label}</a></h3>
+                  <h3><a href={link}>{label}</a></h3>
                 </div>
                 <div class="showcase-details">
                   <p class="showcase-lede">{story.introduction[0]}</p>
                   <div class="showcase-tech">{project.technologies.slice(0, 4).map(tech => <span>{tech}</span>)}</div>
                   {liveUrl ? (
                     <div class="showcase-actions">
-                      <a class="text-link" href={liveUrl} target="_blank" rel="noopener noreferrer">{isUk ? 'Відкрити WaveCode' : 'Open WaveCode'} <ArrowIcon direction="up-right" /></a>
-                      <a class="text-link showcase-secondary-link" href={link}>{isUk ? 'Про розробку' : 'Engineering case'} <ArrowIcon direction="right" /></a>
+                      <a class="text-link" href={link}>{isUk ? 'Про реалізацію' : 'Explore the case'} <ArrowIcon direction="right" /></a>
+                      <a class="text-link showcase-secondary-link" href={liveUrl} target="_blank" rel="noopener noreferrer">{isUk ? 'Відкрити сканер' : 'Open scanner'} <ArrowIcon direction="up-right" /></a>
                     </div>
                   ) : (
                     <a class="text-link" href={link}>{isUk ? 'Кейс із прикладом' : 'Read the engineering case'} <ArrowIcon direction="right" /></a>

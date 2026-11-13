@@ -25,7 +25,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       label: 'Real-time services · independent product',
       introduction: [
         'Mnemos started as a way to follow events in Cristalix SAO without constantly checking the game. It developed into a platform with live events, subscriptions, player profiles, teams, notifications, rewards and account management.',
-        'I designed and implemented the backend, web application and deployment setup. Around 150 people have used Mnemos; the product has also had paid features. Development continues as I improve the individual services and user experience.'
+        'Its backend, web app and deployment were independently developed. Mnemos has reached approximately 150 users, includes paid features and remains under active development.'
       ],
       responsibilities: [
         'Kotlin/Spring Boot services, service-to-service contracts and Kafka messaging.',
@@ -67,7 +67,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
         }
       ],
       outcome: [
-        'Mnemos is an independently built product that people actually use, with functionality extending well beyond its original event feed. I maintain the codebase, deploy changes and handle failures and regressions.',
+        'Mnemos has grown from an event tracker into a multi-service product with accounts, subscriptions, realtime data and social features. The platform remains in active use and development.',
         'The account screen brings together features backed by different services: live events, the account, the wallet, team membership and recent activity.'
       ],
       mediaLabel: 'Mnemos application',
@@ -77,7 +77,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       label: 'Realtime-сервіси · власний продукт',
       introduction: [
         'Mnemos починався як спосіб стежити за подіями Cristalix SAO без постійного перегляду гри. Згодом це переросло в платформу зі стрічкою подій, підписками, профілями гравців, командами, сповіщеннями, нагородами й керуванням акаунтом.',
-        'Я самостійно спроєктував і реалізував backend, вебзастосунок та розгортання. Mnemos користувалися близько 150 людей, частина можливостей була платною. Проєкт підтримую й надалі вдосконалюю.'
+        'Backend, вебзастосунок і розгортання реалізовані самостійно. Mnemos користувалися близько 150 людей, частина можливостей була платною. Продукт продовжує розвиватися.'
       ],
       responsibilities: [
         'Сервіси Kotlin/Spring Boot, контракти між ними та обробка подій через Kafka.',
@@ -119,7 +119,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
         }
       ],
       outcome: [
-        'Mnemos — продукт, який вийшов за межі початкової стрічки подій і має реальних користувачів. Я продовжую підтримувати його, розгортати зміни й виправляти проблеми, що виникають під час експлуатації.',
+        'Mnemos виріс зі стрічки подій у платформу з акаунтами, підписками, realtime-даними та соціальними можливостями. Продукт продовжує працювати й розвиватися.',
         'На головному екрані поєднані функції різних сервісів: актуальні події, акаунт, гаманець, команда та остання активність.'
       ],
       mediaLabel: 'Застосунок Mnemos',
@@ -131,7 +131,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       label: 'Rust library · optical format · web scanner',
       introduction: [
         'WaveCode is an optical format for media links. A small pattern of rounded bars encodes a supported track or video identity and, where the platform allows it, a starting timestamp. Unlike a generic shortened link, the code can be decoded without querying a WaveCode database.',
-        'I built the Rust library, the encoding and decoding tools, native bindings, and a separate web application for scanning and creating codes. The browser uses the Rust codec compiled to WebAssembly rather than maintaining a second TypeScript implementation.'
+        'WaveCode includes a Rust codec, CLI, native bindings and a separate browser scanner and generator. WebAssembly reuses the same Rust implementation without duplicating codec logic in TypeScript.'
       ],
       responsibilities: [
         'Optical V1 format, frame validation, error correction and decoding.',
@@ -154,7 +154,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
           title: 'Format and error handling',
           paragraphs: [
             'V1 uses a fixed 36-column optical frame. The layout includes orientation information, a checksum and Reed–Solomon error correction. The decoder handles supported orientations and can tolerate some damaged symbols, though blur and severe perspective still cause failures.',
-            'I kept the visual structure consistent rather than making the data depend on a particular decorative style. That distinction matters when the same code may be printed, displayed on a screen or used on small objects.'
+            'The format separates optical geometry from decorative styling. That distinction matters when the same code may be printed, displayed on a screen or used on small objects.'
           ]
         },
         {
@@ -173,7 +173,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
         }
       ],
       outcome: [
-        'The library and browser scanner are working projects that I am still improving. The live web application provides the complete encode, scan and export workflow; the portfolio shows a valid sample and links to that application.',
+        'The library and browser scanner are operational projects under active development. The live web application provides the complete encode, scan and export workflow; the portfolio shows a valid sample and links to that application.',
         'WaveCode supports music services and selected video platforms, including YouTube, TikTok and Instagram Reels. It is open source, and the format does not need a proprietary track-ID service.'
       ],
       mediaLabel: 'WaveCode V1 example',
@@ -183,7 +183,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       label: 'Rust-бібліотека · оптичний формат · вебсканер',
       introduction: [
         'WaveCode — оптичний формат для медіапосилань. Невеликий код із заокруглених смуг містить ідентифікатор треку або відео й, якщо платформа підтримує, початковий таймкод. Для декодування не потрібна власна база треків на сервері.',
-        'Я розробив Rust-бібліотеку, інструменти кодування й декодування, нативні прив’язки та окремий вебзастосунок для сканування й генерації. У браузері працює та сама Rust-реалізація, скомпільована у WebAssembly, без дублювання алгоритму на TypeScript.'
+        'WaveCode охоплює Rust-кодек, CLI, нативні прив’язки та браузерний сканер і генератор. WebAssembly використовує ту саму Rust-реалізацію без дублювання алгоритму на TypeScript.'
       ],
       responsibilities: [
         'Оптичний формат V1, перевірка кадру, корекція помилок і декодування.',
@@ -237,7 +237,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       label: 'Native desktop application · network automation',
       introduction: [
         'C7xBotManager is a desktop tool for operating multiple lightweight Cristalix/Minecraft clients without launching a full game for each account. It handles authentication, session state, proxies and automation through a native manager and a headless Java runtime.',
-        'I designed the application architecture, implemented its management tools and optimized networking and automation. The initial research into part of the authentication protocol had outside assistance. The product was distributed through one-time purchases to roughly ten users.'
+        'The application integrates a headless runtime, account management, network transport and automation. The initial research into part of the authentication protocol had outside assistance. The product was distributed through one-time purchases to roughly ten users.'
       ],
       responsibilities: [
         'Modular Java backend: application API, runtime, protocol, navigation and SAO automation.',
@@ -260,14 +260,14 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
           title: 'Shared transport and protocol handling',
           paragraphs: [
             'The Java side uses a shared NIO runtime rather than starting a full Minecraft process per account. Session initialization builds a Netty pipeline with optional SOCKS/HTTP proxy handlers, encryption, packet sizing and a codec for the supported protocol.',
-            'One concrete problem was an interaction between proxied connections and PacketLib’s priority writes. Calling the normal activation path on Netty’s event loop could block while the proxy pipeline was still settling. I moved that activation to a small worker and let Netty queue the writes safely.'
+            'One concrete problem was an interaction between proxied connections and PacketLib’s priority writes. Calling the normal activation path on Netty’s event loop could block while the proxy pipeline was still settling. Activation was moved to a separate worker, leaving Netty to queue writes without blocking the event loop.'
           ]
         },
         {
           title: 'Desktop shell and backend separation',
           paragraphs: [
             'The interface is hosted in a native Go application with Win32 window handling and WebView2. It starts and manages a Java backend process and communicates with it through the local API. This keeps protocol and automation logic independent from window rendering.',
-            'I also built account-group operations, live logs, diagnostics, an encrypted local account vault and isolated release/build profiles. Windows uses native window and tray integration; portable macOS/Linux builds open the manager UI in a browser.'
+            'The manager includes bulk account operations, live logs, diagnostics, encrypted local account storage and isolated release profiles. Windows uses native window and tray integration; portable macOS/Linux builds open the manager UI in a browser.'
           ]
         },
         {
@@ -279,7 +279,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
         }
       ],
       outcome: [
-        'The product reached roughly ten paying users and supported configurations with up to 500 active client sessions. I continued developing it as both a networked runtime and a practical desktop tool.',
+        'The product reached roughly ten paying users and supported configurations with up to 500 active client sessions. Its architecture covers both the network runtime and the desktop management interface.',
         'Protocol compatibility also requires ongoing work: packet handling, authentication and state transitions have to be adapted when the external service changes.'
       ],
       mediaLabel: 'C7xBotManager architecture',
@@ -289,7 +289,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       label: 'Нативний застосунок · мережева автоматизація',
       introduction: [
         'C7xBotManager — десктопний інструмент для керування багатьма полегшеними клієнтами Cristalix/Minecraft без запуску повноцінної гри для кожного акаунта. Програма відповідає за автентифікацію, стан сесій, проксі та автоматизацію через нативний менеджер і headless runtime на Java.',
-        'Я спроєктував архітектуру, реалізував інструменти керування й оптимізував мережеву частину та автоматизацію. На початковому етапі дослідження частини протоколу автентифікації допомагала інша людина. Продукт розповсюджувався з разовою оплатою серед приблизно десяти користувачів.'
+        'Застосунок поєднує headless runtime, керування акаунтами, мережевий транспорт і автоматизацію. На початковому етапі дослідження частини протоколу автентифікації допомагала інша людина. Продукт розповсюджувався з разовою оплатою серед приблизно десяти користувачів.'
       ],
       responsibilities: [
         'Модульний Java backend: API застосунку, runtime, протокол, навігація та SAO-автоматизація.',
@@ -312,7 +312,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
           title: 'Спільний транспорт і протокол',
           paragraphs: [
             'Java-частина використовує спільний NIO runtime, а не окремий процес Minecraft для кожного акаунта. Під час створення сесії налаштовується Netty pipeline з підтримкою SOCKS/HTTP проксі, шифрування, формату пакетів і декодера.',
-            'Одна з конкретних проблем виникала на проксованих підключеннях: пріоритетні записи PacketLib могли блокувати event loop Netty, поки proxy pipeline ще встановлювався. Я переніс етап активації на окремий невеликий worker, залишивши запис у канал через механізми Netty.'
+            'Одна з конкретних проблем виникала на проксованих підключеннях: пріоритетні записи PacketLib могли блокувати event loop Netty, поки proxy pipeline ще встановлювався. Активацію перенесено в окремий worker, після чого записи проходять через Netty без блокування event loop.'
           ]
         },
         {
@@ -331,7 +331,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
         }
       ],
       outcome: [
-        'Програма мала приблизно десять платних користувачів і підтримувала конфігурації до 500 активних клієнтів. Я розвивав її і як мережевий runtime, і як десктопний інструмент.',
+        'Програма мала приблизно десять платних користувачів і підтримувала конфігурації до 500 активних клієнтів. Архітектура охоплює мережевий runtime та інтерфейс керування.',
         'Підтримка сумісності протоколу також стала частиною розробки: після змін зовнішнього сервісу потрібно адаптувати пакети, автентифікацію та переходи станів.'
       ],
       mediaLabel: 'Архітектура C7xBotManager',
@@ -342,8 +342,8 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
     en: {
       label: 'Full-stack LMS · academic project',
       introduction: [
-        'Studium is a learning management system I developed independently. Students can work with assignments, tests, materials, grades and schedules; teachers manage their courses and review submissions; administrators handle the academic structure and user accounts.',
-        'I built a React/TypeScript frontend and a Java 21/Spring backend split into services behind a single API gateway. The application runs in a test environment and was developed as an academic project, not as a deployed commercial LMS.'
+        'Studium is an independently developed learning management system. Students can work with assignments, tests, materials, grades and schedules; teachers manage their courses and review submissions; administrators handle the academic structure and user accounts.',
+        'A React/TypeScript frontend connects to Java 21/Spring services through a common API gateway. The application runs in a test environment and was developed as an academic project, not as a deployed commercial LMS.'
       ],
       responsibilities: [
         'Role-specific React interfaces, API integration and assignment/test workflows.',
@@ -380,13 +380,13 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
           title: 'Files and notifications',
           paragraphs: [
             'Binary files are stored in MinIO with metadata in PostgreSQL. Assignment services reference file identifiers and enforce policies, while file-service handles downloads and previews.',
-            'Domain events are published to Kafka; notification-service can persist the resulting notification and make it available to the app or a Telegram bot. I also added integration and backend verification procedures for the test environment.'
+            'Domain events are published to Kafka; notification-service can persist the resulting notification and make it available to the app or a Telegram bot. Integration and backend tests cover the test environment.'
           ]
         }
       ],
       outcome: [
         'Studium is a substantial full-stack project with separate student, teacher and administrator interfaces. The screenshots on this page are from the real application.',
-        'It has been developed and tested in a non-production environment. I do not present it as a commercial deployment with real users.'
+        'It has been developed and tested in a non-production environment. The platform is an academic project operated in a test environment.'
       ],
       mediaLabel: 'Studium interface',
       mediaDescription: 'Actual screens from student, teacher and administrator workspaces.'
@@ -438,7 +438,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       ],
       outcome: [
         'Studium — великий full-stack проєкт з окремими кабінетами студента, викладача й адміністратора. На сторінці показані справжні скриншоти застосунку.',
-        'Система розроблена та протестована в непродукційному середовищі. Я не подаю її як комерційне розгортання з реальними користувачами.'
+        'Система розроблена та протестована в непродукційному середовищі. Це навчальний проєкт, що працює в тестовому середовищі.'
       ],
       mediaLabel: 'Інтерфейс Studium',
       mediaDescription: 'Справжні екрани студентського, викладацького й адміністративного кабінетів.'
