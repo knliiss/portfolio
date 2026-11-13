@@ -27,7 +27,7 @@ for (const file of required) {
 }
 
 const en = await readFile(resolve(root, 'en/index.html'), 'utf8');
-if (!en.includes('Software, thoughtfully engineered.')) {
+if (!en.includes('From architecture to working products.')) {
   throw new Error('Incorrect English homepage generated.');
 }
 
