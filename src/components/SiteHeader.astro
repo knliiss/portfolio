@@ -5,6 +5,8 @@ const { lang, route } = Astro.props;
 const copy = ui[lang];
 const alternate = route.replace(new RegExp('^' + lang + '/'), alternateLanguage(lang) + '/');
 const home = pathFor(lang + '/');
+const mobileMenuLabel = lang === 'uk' ? 'Відкрити навігацію' : 'Open navigation';
+const resumeLabel = copy.viewResume;
 ---
 <header class="site-header">
   <div class="container header-inner">
@@ -25,6 +27,20 @@ const home = pathFor(lang + '/');
           <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
         </svg>
       </button>
+      <details id="mobile-menu" class="mobile-menu">
+        <summary aria-label={mobileMenuLabel}>
+          <span class="sr-only">{mobileMenuLabel}</span>
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 8H20M4 16H20" />
+          </svg>
+        </summary>
+        <nav class="mobile-menu-panel" aria-label={lang === 'uk' ? 'Мобільна навігація' : 'Mobile navigation'}>
+          <a href={home + '#work'}>{copy.navWork}<span aria-hidden="true">↗</span></a>
+          <a href={home + '#about'}>{copy.navAbout}<span aria-hidden="true">↗</span></a>
+          <a href={home + '#contact'}>{copy.navContact}<span aria-hidden="true">↗</span></a>
+          <a href={pathFor(lang + '/resume/')}>{resumeLabel}<span aria-hidden="true">↗</span></a>
+        </nav>
+      </details>
     </div>
   </div>
 </header>

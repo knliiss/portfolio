@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/mobile.css';
 import { profile, pathFor, type Language, alternateLanguage } from '../data/content';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -72,6 +73,23 @@ const schema = {
         toggle.setAttribute('aria-pressed', String(next === 'dark'));
       });
       if (toggle) toggle.setAttribute('aria-pressed', String(document.documentElement.dataset.theme === 'dark'));
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu instanceof HTMLDetailsElement) {
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => { mobileMenu.open = false; });
+        });
+        mobileMenu.addEventListener('keydown', event => {
+          if (event.key === 'Escape') {
+            mobileMenu.open = false;
+            mobileMenu.querySelector('summary')?.focus();
+          }
+        });
+        document.addEventListener('pointerdown', event => {
+          if (mobileMenu.open && event.target instanceof Node && !mobileMenu.contains(event.target)) {
+            mobileMenu.open = false;
+          }
+        });
+      }
     </script>
   </body>
 </html>
