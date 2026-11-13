@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+import { ui, profile, pathFor, type Language, alternateLanguage } from '../data/content';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  lang: Language;
+  title: string;
+  description: string;
+  route: string;
+  noindex?: boolean;
+}
+const { lang, title, description, route, noindex = false } = Astro.props;
+const copy = ui[lang];
+const altLang = alternateLanguage(lang);
+const altRoute = route.replace(new RegExp('^' + lang + '/'), altLang + '/');
+const canonical = new URL(pathFor(route), Astro.site ?? 'https://knliiss.github.io').toString();
+const altCanonical = new URL(pathFor(altRoute), Astro.site ?? 'https://knliiss.github.io').toString();
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  jobTitle: 'Software Engineer',
+  address: { '@type': 'PostalAddress', addressLocality: 'Lviv', addressCountry: 'UA' },
+  email: profile.email,
+  url: new URL(pathFor('en/'), Astro.site ?? 'https://knliiss.github.io').toString(),
+  sameAs: [profile.github, profile.linkedin]
+};
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7f4" />
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/svg+xml" href={pathFor('favicon.svg')} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={lang === 'en' ? canonical : altCanonical} />
+    <link rel="alternate" hreflang="uk" href={lang === 'uk' ? canonical : altCanonical} />
+    <link rel="alternate" hreflang="x-default" href={new URL(pathFor('en/'), Astro.site ?? 'https://knliiss.github.io').toString()} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === 'uk' ? 'uk_UA' : 'en_US'} />
+    <meta name="twitter:card" content="summary" />
+    <title>{title} · {profile.name}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('vl-color-theme');
+        const theme = saved === 'dark' || saved === 'light' ? saved : 'light';
+        document.documentElement.dataset.theme = theme;
+      } catch (_) { document.documentElement.dataset.theme = 'light'; }
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content / Перейти до вмісту</a>
+    <SiteHeader lang={lang} route={route} />
+    <main id="main"><slot /></main>
+    <SiteFooter lang={lang} />
+    <script is:inline>
+      const toggle = document.getElementById('theme-toggle');
+      toggle?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try { localStorage.setItem('vl-color-theme', next); } catch (_) {}
+        toggle.setAttribute('aria-pressed', String(next === 'dark'));
+      });
+      if (toggle) toggle.setAttribute('aria-pressed', String(document.documentElement.dataset.theme === 'dark'));
+    </script>
+  </body>
+</html>

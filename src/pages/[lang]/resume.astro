@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { languages, ui, profile, projects, pathFor, type Language } from '../../data/content';
+export function getStaticPaths() { return languages.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Language;
+const copy = ui[lang];
+const items = projects.map(p => ({ ...p, text: p.copy[lang] }));
+const route = lang + '/resume/';
+---
+<BaseLayout lang={lang} route={route} title={copy.resumeTitle} description={copy.resumeSummary} noindex>
+  <div class="container resume-page">
+    <div class="resume-actions">
+      <a href={pathFor(lang + '/')} class="backlink">← {copy.notFoundBack}</a>
+      <button type="button" class="button" id="print-resume">{copy.printResume}<span aria-hidden="true">↗</span></button>
+    </div>
+    <article class="resume-paper" aria-label="Vitalii Lototskyi resume">
+      <h1>{profile.name}</h1>
+      <p class="resume-role">Software Engineer | Kotlin & Java</p>
+      <div class="resume-contact">
+        <span>{lang === 'en' ? 'Lviv, Ukraine' : 'Львів, Україна'}</span>
+        <a href={'mailto:' + profile.email}>{profile.email}</a>
+        <a href={'tel:' + profile.phone}>+380 50 689 94 58</a>
+        <a href={profile.github}>github.com/knliiss</a>
+        <a href={profile.linkedin}>LinkedIn</a>
+      </div>
+      <h2>{lang === 'en' ? 'Profile' : 'Профіль'}</h2>
+      <p>{copy.resumeSummary}</p>
+      <h2>{copy.resumeFocus}</h2>
+      <p><strong>{lang === 'en' ? 'Languages' : 'Мови'}:</strong> Kotlin, Java, Rust, Go, TypeScript, SQL</p>
+      <p><strong>Backend:</strong> Spring Boot, REST APIs, Apache Kafka, WebSockets, PostgreSQL, Redis, Keycloak</p>
+      <p><strong>Web & tooling:</strong> React, Git, Docker, Gradle</p>
+      <h2>{copy.resumeExperiences}</h2>
+      {items.map(({slug,repo,technologies,text}) => (
+        <div class="resume-block">
+          <div class="resume-block-title"><a href={repo}>{slug === 'c7xbotmanager' ? 'C7xBotManager' : slug === 'wavecode' ? 'WaveCode' : slug === 'studium' ? 'Studium' : 'Mnemos'}</a><span>{text.role}</span></div>
+          <div class="resume-block-sub">{technologies.slice(0, 4).join(' · ')}</div>
+          <p>{text.description} {text.resultLabel}.</p>
+        </div>
+      ))}
+      <h2>{copy.resumeAchievements}</h2>
+      {copy.awards.map(a => <p><strong>{a[0]} — {a[1]}</strong>{a[2] ? ' · ' + a[2] : ''} · BEST Engineering Competition (BEST Lviv)</p>)}
+      <h2>{copy.resumeEducation}</h2>
+      <p><strong>{copy.school}</strong> — {copy.studying}</p>
+      <p>{copy.resumeLanguage}</p>
+    </article>
+  </div>
+  <script is:inline>document.getElementById('print-resume')?.addEventListener('click', () => window.print());</script>
+</BaseLayout>

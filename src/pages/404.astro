@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pathFor } from '../data/content';
+---
+<BaseLayout lang="en" route="en/" title="Not found" description="Page not found" noindex>
+  <div class="container" style="min-height:65vh;display:flex;flex-direction:column;justify-content:center;gap:25px;padding-block:90px">
+    <span class="eyebrow">404 / NOT FOUND</span>
+    <h1>This page<br/>doesn’t exist.</h1>
+    <a href={pathFor('en/')} class="text-link">Return home <span aria-hidden="true">↗</span></a>
+  </div>
+</BaseLayout>

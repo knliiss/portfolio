@@ -1,0 +1,17 @@
+---
+import { pathFor } from '../data/content';
+const destination = pathFor('en/');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={'0;url=' + destination} />
+    <link rel="canonical" href={destination} />
+    <title>Vitalii Lototskyi · Software Engineer</title>
+  </head>
+  <body>
+    <p>Continue to <a href={destination}>the portfolio</a>.</p>
+  </body>
+</html>

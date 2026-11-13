@@ -1,0 +1,30 @@
+---
+import { ui, pathFor, alternateLanguage, type Language } from '../data/content';
+interface Props { lang: Language; route: string }
+const { lang, route } = Astro.props;
+const copy = ui[lang];
+const alternate = route.replace(new RegExp('^' + lang + '/'), alternateLanguage(lang) + '/');
+const home = pathFor(lang + '/');
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={home} class="brand" aria-label="Vitalii Lototskyi — home">
+      <span class="brand-sign" aria-hidden="true">VL</span>
+      <span>Vitalii Lototskyi<span aria-hidden="true">.</span></span>
+    </a>
+    <nav class="site-nav" aria-label={lang === 'uk' ? 'Головна навігація' : 'Main navigation'}>
+      <a href={home + '#work'}>{copy.navWork}</a>
+      <a href={home + '#about'}>{copy.navAbout}</a>
+      <a href={home + '#contact'}>{copy.navContact}</a>
+    </nav>
+    <div class="header-actions">
+      <a class="language-link" href={pathFor(alternate)} aria-label={copy.switchLanguage} hreflang={alternateLanguage(lang)}>{lang === 'en' ? 'UA' : 'EN'}</a>
+      <button type="button" id="theme-toggle" class="icon-button" aria-label={copy.switchTheme} title={copy.switchTheme} aria-pressed="false">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

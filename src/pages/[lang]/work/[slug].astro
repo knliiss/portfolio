@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProjectVisual from '../../../components/ProjectVisual.astro';
+import { projects, languages, ui, pathFor, type Language, type Project } from '../../../data/content';
+export function getStaticPaths() {
+  return languages.flatMap(lang => projects.map(project => ({
+    params: { lang, slug: project.slug },
+    props: { lang, project }
+  })));
+}
+const { lang, project } = Astro.props as { lang: Language; project: Project };
+const copy = ui[lang];
+const text = project.copy[lang];
+const index = projects.findIndex(p => p.slug === project.slug);
+const next = projects[(index + 1) % projects.length];
+const nextName = next.slug === 'c7xbotmanager' ? 'C7xBotManager' : next.slug === 'wavecode' ? 'WaveCode' : next.slug === 'studium' ? 'Studium' : 'Mnemos';
+const projectName = project.slug === 'c7xbotmanager' ? 'C7xBotManager' : project.slug === 'wavecode' ? 'WaveCode' : project.slug === 'studium' ? 'Studium' : 'Mnemos';
+const route = lang + '/work/' + project.slug + '/';
+---
+<BaseLayout lang={lang} route={route} title={projectName + ' — Engineering case study'} description={text.description}>
+  <div class="container">
+    <header class="case-hero">
+      <a href={pathFor(lang + '/#work')} class="backlink"><span aria-hidden="true">←</span> {copy.backToWork}</a>
+      <p class="eyebrow" style="margin-top:55px;display:flex">{project.order} / {text.category}</p>
+      <h1>{projectName}<span aria-hidden="true">.</span></h1>
+      <p class="case-subtitle">{text.subtitle}</p>
+      <div class="case-meta">
+        <div><span class="eyebrow">{copy.role}</span><strong>{text.role}</strong></div>
+        <div><span class="eyebrow">{copy.status}</span><strong>{text.status}</strong></div>
+        <div><span class="eyebrow">{copy.outcome}</span><strong>{text.resultLabel}</strong></div>
+      </div>
+    </header>
+    <div class="case-hero-art"><ProjectVisual project={project} detail /></div>
+    <article class="case-content">
+      <div class="case-row">
+        <div class="case-row-label eyebrow">01 / {copy.overview}</div>
+        <div class="case-body">
+          <h2>{text.challengeTitle}</h2>
+          <p>{text.description}</p>
+          <p>{text.challenge}</p>
+        </div>
+      </div>
+      <div class="case-row">
+        <div class="case-row-label eyebrow">02 / {copy.engineering}</div>
+        <div class="case-body">
+          <h2>{text.solutionTitle}</h2>
+          <p>{text.solution}</p>
+          <ul class="highlight-list">
+            {text.highlights.map(highlight => <li>{highlight}</li>)}
+          </ul>
+          <div class="case-tags">{project.technologies.map(tech => <span class="pill">{tech}</span>)}</div>
+        </div>
+      </div>
+      <div class="case-row">
+        <div class="case-row-label eyebrow">03 / {copy.outcome}</div>
+        <div class="case-body">
+          <h2>{text.resultsTitle}</h2>
+          <p>{text.results}</p>
+          <div class="case-links">
+            <a href={project.repo} class="button" target="_blank" rel="noopener noreferrer">{copy.openSource} <span aria-hidden="true">↗</span></a>
+            {project.secondRepo && <a href={project.secondRepo} target="_blank" rel="noopener noreferrer" class="text-link">{copy.moreProject} <span aria-hidden="true">↗</span></a>}
+          </div>
+        </div>
+      </div>
+      {project.gallery && (
+        <div class="gallery" aria-label="Project screenshots">
+          {project.gallery.map((asset, i) => (
+            <figure><img src={asset} alt={projectName + ' — actual product screenshot ' + (i + 1)} loading="lazy" decoding="async" /></figure>
+          ))}
+        </div>
+      )}
+    </article>
+    <a class="next-project" href={pathFor(lang + '/work/' + next.slug + '/')}>
+      <span><span class="eyebrow">{copy.nextProject}</span><h2>{nextName}</h2></span>
+      <span class="next-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
+</BaseLayout>

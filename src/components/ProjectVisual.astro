@@ -1,0 +1,50 @@
+---
+import type { Project } from '../data/content';
+interface Props { project: Project; detail?: boolean }
+const { project, detail = false } = Astro.props;
+const isScreen = project.visual === 'mnemos' || project.visual === 'studium';
+---
+<div class={'project-visual project-visual--' + project.visual} aria-label={project.slug + ' visual'}>
+  <div class="visual-topline"><span>{project.slug === 'c7xbotmanager' ? 'Network architecture' : project.slug === 'wavecode' ? 'Optical format' : 'Product interface'}</span><span>{project.order} / 04</span></div>
+  {isScreen && project.cover && (
+    <div class="screen-wrap">
+      <div class="screen-glass">
+        <img src={project.cover} alt={project.slug === 'mnemos' ? 'Actual Mnemos account dashboard' : 'Actual Studium student dashboard'} loading={detail ? 'eager' : 'lazy'} decoding="async" />
+      </div>
+    </div>
+  )}
+  {project.visual === 'wavecode' && (
+    <>
+      <div class="wave-form">
+        <img src={project.cover} loading={detail ? 'eager' : 'lazy'} decoding="async" alt="Original WaveCode W-shaped brand mark" />
+      </div>
+      <div class="wave-foot"><span>Rust / SDK</span><span>WebAssembly / Scanner</span></div>
+    </>
+  )}
+  {project.visual === 'c7x' && (
+    <>
+      <div class="c7x-diagram" role="img" aria-label="Conceptual diagram of the C7xBotManager desktop shell, headless runtime, and network session and proxy layers">
+        <svg viewBox="0 0 500 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="158" y="22" width="184" height="66" rx="3" class="diagram-fill"/>
+          <text x="250" y="51" text-anchor="middle" class="technical-label">DESKTOP SHELL</text>
+          <text x="250" y="70" text-anchor="middle" class="technical-small">Go / WebView2</text>
+          <path d="M250 88 V128" class="diagram-wire"/>
+          <rect x="120" y="128" width="260" height="73" rx="3" class="diagram-fill"/>
+          <text x="250" y="160" text-anchor="middle" class="technical-label">HEADLESS RUNTIME</text>
+          <text x="250" y="180" text-anchor="middle" class="technical-small">Java / Shared NIO transport</text>
+          <path d="M250 201 V229 H75 V252 M250 229 V252 M250 229 H425 V252" class="diagram-wire"/>
+          <rect x="12" y="252" width="126" height="52" rx="3" class="diagram-fill"/>
+          <rect x="187" y="252" width="126" height="52" rx="3" class="diagram-fill"/>
+          <rect x="362" y="252" width="126" height="52" rx="3" class="diagram-fill"/>
+          <text x="75" y="273" text-anchor="middle" class="technical-label">SESSIONS</text>
+          <text x="75" y="288" text-anchor="middle" class="technical-small">Lifecycle / State</text>
+          <text x="250" y="273" text-anchor="middle" class="technical-label">NETWORK</text>
+          <text x="250" y="288" text-anchor="middle" class="technical-small">Protocol / I/O</text>
+          <text x="425" y="273" text-anchor="middle" class="technical-label">PROXIES</text>
+          <text x="425" y="288" text-anchor="middle" class="technical-small">Pools / Recovery</text>
+        </svg>
+      </div>
+      <div class="wave-foot"><span>Concurrent client management</span><span>Conceptual diagram</span></div>
+    </>
+  )}
+</div>
