@@ -181,7 +181,7 @@ export const projects: Project[] = [
     copy: {
       en: {
         category: 'Distributed systems / Product',
-        subtitle: 'Real-time data, reliable event delivery and a product used by real people.',
+        subtitle: 'Real-time events, subscriptions, profiles and accounts for Cristalix SAO.',
         description: 'An independent event-driven platform that brings together live event data, notifications, user accounts, and a real-time interface.',
         challengeTitle: 'The challenge',
         challenge: 'Multiple sources produce changing event data. Users need timely notifications and consistent account state, while services must remain independent and recover from delivery failures.',
@@ -197,7 +197,7 @@ export const projects: Project[] = [
       },
       uk: {
         category: 'Розподілені системи / Продукт',
-        subtitle: 'Дані в реальному часі, надійна доставка подій та продукт із реальними користувачами.',
+        subtitle: 'Події Cristalix SAO в реальному часі, підписки, профілі та акаунти.',
         description: 'Самостійно розроблена event-driven платформа, що об’єднує події в реальному часі, сповіщення, облікові записи та інтерактивний інтерфейс.',
         challengeTitle: 'Задача',
         challenge: 'Із кількох джерел надходять події, що постійно змінюються. Користувачі мають отримувати своєчасні сповіщення, а сервіси — зберігати незалежність і витримувати збої доставки.',
@@ -225,7 +225,7 @@ export const projects: Project[] = [
     copy: {
       en: {
         category: 'Systems programming / Open source',
-        subtitle: 'An optical format and cross-platform SDK for music and video links.',
+        subtitle: 'An open optical code for media links, with a Rust SDK and web scanner.',
         description: 'WaveCode encodes supported media identities and optional native timestamps into a compact optical mark. The Rust core powers a CLI, native bindings and a mobile-first browser scanner.',
         challengeTitle: 'The challenge',
         challenge: 'Represent music references from different services in a small visual code that can be decoded reliably, without a proprietary link database or duplicated implementations across platforms.',
@@ -241,7 +241,7 @@ export const projects: Project[] = [
       },
       uk: {
         category: 'Системне програмування / Open source',
-        subtitle: 'Оптичний формат та кросплатформний SDK для музичних і відеопосилань.',
+        subtitle: 'Оптичний код для музики та відео, Rust SDK і вебсканер.',
         description: 'WaveCode кодує ідентифікатори підтримуваних медіа та необов’язкові таймкоди у компактний оптичний знак. Rust-ядро використовується CLI, нативними прив’язками та мобільним вебсканером.',
         challengeTitle: 'Задача',
         challenge: 'Подати посилання з різних музичних сервісів у невеликому візуальному коді, який можна надійно декодувати без власної бази ідентифікаторів та дублювання алгоритмів між платформами.',
@@ -267,7 +267,7 @@ export const projects: Project[] = [
     copy: {
       en: {
         category: 'Networking / Developer tooling',
-        subtitle: 'Concurrent headless session management and network automation.',
+        subtitle: 'A desktop manager for up to 500 headless Cristalix client sessions.',
         description: 'A specialized desktop tool for managing many headless client sessions, combining a Java runtime with a native Go desktop shell.',
         challengeTitle: 'The challenge',
         challenge: 'Maintain numerous concurrent client connections while controlling resource use, state transitions, network errors and proxy behavior through a usable desktop application.',
@@ -283,7 +283,7 @@ export const projects: Project[] = [
       },
       uk: {
         category: 'Мережі / Інструменти розробника',
-        subtitle: 'Керування паралельними headless-сесіями та мережева автоматизація.',
+        subtitle: 'Десктопний менеджер для керування до 500 headless-сесіями Cristalix.',
         description: 'Спеціалізований десктопний інструмент керування багатьма headless-клієнтами на основі Java runtime та нативної оболонки на Go.',
         challengeTitle: 'Задача',
         challenge: 'Підтримувати численні паралельні підключення з контрольованим використанням ресурсів, правильною обробкою станів, мережевих помилок і проксі через зручний десктопний застосунок.',
@@ -313,7 +313,7 @@ export const projects: Project[] = [
     copy: {
       en: {
         category: 'Full-stack / Academic project',
-        subtitle: 'A role-based learning management system with domain-oriented services.',
+        subtitle: 'A learning platform for students, teachers and administrators.',
         description: 'A self-developed learning management platform covering students, teachers and administrators. It connects assignments, tests, schedules, files and notifications in one application.',
         challengeTitle: 'The challenge',
         challenge: 'Model different academic workflows with consistent authorization, file handling and maintainable boundaries between functional areas.',
@@ -329,7 +329,7 @@ export const projects: Project[] = [
       },
       uk: {
         category: 'Full-stack / Навчальний проєкт',
-        subtitle: 'Рольова LMS-платформа з доменно-орієнтованими сервісами.',
+        subtitle: 'Навчальна платформа для студентів, викладачів та адміністраторів.',
         description: 'Самостійно розроблена навчальна платформа для студентів, викладачів та адміністраторів. Об’єднує завдання, тести, розклади, файли та сповіщення.',
         challengeTitle: 'Задача',
         challenge: 'Змоделювати різні навчальні процеси зі зрозумілою авторизацією, роботою з файлами та підтримуваними межами між функціональними модулями.',
