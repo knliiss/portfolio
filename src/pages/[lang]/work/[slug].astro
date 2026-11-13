@@ -174,7 +174,7 @@ const resultLabel = isUk ? 'Результат' : 'Outcome';
           <div class="gallery-grid">
             {project.gallery.map((asset, idx) => (
               <figure>
-                <div class="gallery-img"><img src={pathFor(asset)} alt={galleryLabels[idx] + (isUk ? ' — скриншот Studium' : ' — actual Studium screenshot')} loading="lazy" decoding="async" /></div>
+                <a class="gallery-img" href={pathFor(asset)} target="_blank" rel="noopener noreferrer" aria-label={galleryLabels[idx] + (isUk ? ': відкрити повний скриншот' : ': view full screenshot')}><img src={pathFor(asset)} alt={galleryLabels[idx] + (isUk ? ' — скриншот Studium' : ' — actual Studium screenshot')} loading="lazy" decoding="async" /></a>
                 <figcaption><span>0{idx + 2}</span> {galleryLabels[idx]}</figcaption>
               </figure>
             ))}

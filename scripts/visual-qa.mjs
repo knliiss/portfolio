@@ -4,48 +4,92 @@ import { mkdir, writeFile } from 'node:fs/promises';
 const origin = process.env.VISUAL_QA_ORIGIN || 'http://127.0.0.1:4173';
 const fixtures = [
   ['home-desktop', '/en/', 1440, 900],
-  ['home-mobile', '/en/', 390, 844],
-  ['home-mobile-small', '/uk/', 320, 740],
-  ['c7x-desktop', '/en/work/c7xbotmanager/', 1440, 900],
-  ['c7x-mobile', '/en/work/c7xbotmanager/', 390, 844],
-  ['wavecode-desktop', '/en/work/wavecode/', 1440, 900],
-  ['mnemos-desktop', '/en/work/mnemos/', 1440, 900],
-  ['studium-desktop', '/en/work/studium/', 1440, 900],
-  ['studium-mobile', '/uk/work/studium/', 390, 844]
+  ['home-tablet', '/uk/', 768, 1024],
+  ['home-mobile-430', '/en/', 430, 932],
+  ['home-mobile-390', '/uk/', 390, 844],
+  ['home-mobile-360', '/en/', 360, 780],
+  ['home-mobile-320', '/uk/', 320, 740],
+  ['mnemos-mobile-390', '/en/work/mnemos/', 390, 844],
+  ['mnemos-mobile-320', '/uk/work/mnemos/', 320, 740],
+  ['wavecode-mobile-360', '/en/work/wavecode/', 360, 780],
+  ['wavecode-mobile-320', '/uk/work/wavecode/', 320, 740],
+  ['c7x-mobile-390', '/en/work/c7xbotmanager/', 390, 844],
+  ['c7x-mobile-320', '/uk/work/c7xbotmanager/', 320, 740],
+  ['studium-mobile-390', '/uk/work/studium/', 390, 844],
+  ['studium-mobile-320', '/en/work/studium/', 320, 740],
+  ['resume-mobile-360', '/en/resume/', 360, 780],
+  ['home-desktop-small', '/en/', 1024, 768],
+  ['c7x-desktop', '/en/work/c7xbotmanager/', 1440, 900]
 ];
 
 await mkdir('visual-qa', { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const report = [];
+
 try {
   for (const [name, route, width, height] of fixtures) {
-    const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1 });
+    const context = await browser.newContext({
+      viewport: { width, height },
+      deviceScaleFactor: 1,
+      isMobile: width <= 900,
+      hasTouch: width <= 900
+    });
     const page = await context.newPage();
-    const exceptions = [];
-    page.on('pageerror', error => exceptions.push(error.message));
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
     const response = await page.goto(origin + route, { waitUntil: 'load', timeout: 20000 });
-    await page.locator('img').evaluateAll(images => images.forEach(image => { image.loading = 'eager'; }));
+    await page.locator('img').evaluateAll(images => images.forEach(img => { img.loading = 'eager'; }));
     await Promise.race([
-      page.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode().catch(() => undefined)))),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Image decoding timeout: ' + name)), 12000))
+      page.locator('img').evaluateAll(images => Promise.all(images.map(img => img.decode().catch(() => undefined)))),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Image timeout: ' + name)), 12000))
     ]);
-    const result = await page.evaluate(() => ({
-      bodyWidth: document.body.scrollWidth,
-      documentWidth: document.documentElement.scrollWidth,
-      viewportWidth: innerWidth,
-      images: [...document.images].map(image => ({ source: image.currentSrc, loaded: image.complete && image.naturalWidth > 0 })),
-      heading: document.querySelector('h1')?.textContent?.trim() ?? ''
+    const stats = await page.evaluate(() => ({
+      pageWidth: document.documentElement.scrollWidth,
+      viewport: window.innerWidth,
+      images: [...document.images].map(img => ({ src: img.currentSrc, loaded: img.complete && img.naturalWidth > 0 })),
+      heading: document.querySelector('main h1')?.textContent?.trim(),
+      overflowHeadings: [...document.querySelectorAll('main h1,main h2,main h3')].filter(el => el.scrollWidth > el.clientWidth + 2).map(el => el.textContent?.trim().slice(0,80))
     }));
-    await page.screenshot({ path: 'visual-qa/' + name + '.png', fullPage: true });
-    report.push({ name, route, status: response?.status(), ...result, errors: exceptions });
-    if (response?.status() !== 200 || result.images.some(image => !image.loaded) || result.documentWidth > width + 1 || exceptions.length > 0) {
-      console.error(JSON.stringify(report.at(-1), null, 2));
-      throw new Error('Visual smoke check failed: ' + name);
+    if (response?.status() !== 200 || stats.images.some(x => !x.loaded) || stats.pageWidth > stats.viewport + 1 || errors.length || stats.overflowHeadings.length) {
+      throw Error(JSON.stringify({ name, status: response?.status(), stats, errors }, null, 2));
     }
+    if (width <= 900) {
+      const desktopNavigation = page.locator('.site-nav');
+      if (await desktopNavigation.isVisible()) throw Error('Desktop navigation visible on mobile: ' + name);
+      const summary = page.locator('#mobile-menu summary');
+      if (!(await summary.isVisible())) throw Error('Mobile menu missing: ' + name);
+      const size = await summary.boundingBox();
+      if (!size || size.width < 42 || size.height < 44) throw Error('Menu touch target too small: ' + name);
+      await summary.click();
+      if (!(await page.locator('#mobile-menu').evaluate(el => el.open))) throw Error('Menu did not open: ' + name);
+      const links = page.locator('.mobile-menu-panel a');
+      if (await links.count() !== 4) throw Error('Incomplete mobile navigation: ' + name);
+      const bounds = await page.locator('.mobile-menu-panel').boundingBox();
+      if (!bounds || bounds.x < -1 || bounds.x + bounds.width > width + 1) throw Error('Menu outside viewport: ' + name);
+      await page.keyboard.press('Escape');
+      if (await page.locator('#mobile-menu').evaluate(el => el.open)) throw Error('Escape did not dismiss menu: ' + name);
+    }
+    await page.screenshot({ path: 'visual-qa/' + name + '.png', fullPage: true });
+    report.push({ name, status: response?.status(), ...stats, exceptions: errors });
     await context.close();
+    console.log('[mobile-qa] ' + name + ' PASS');
   }
+
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  await page.goto(origin + '/en/', { waitUntil: 'load' });
+  await page.locator('#mobile-menu summary').click();
+  await page.locator('.mobile-menu-panel a[href$="#work"]').click();
+  if (await page.locator('#mobile-menu').evaluate(el => el.open)) throw Error('Menu stayed open after navigation');
+  await page.locator('#theme-toggle').click();
+  if (await page.locator('html').getAttribute('data-theme') !== 'dark') throw Error('Theme did not change');
+  await page.reload();
+  if (await page.locator('html').getAttribute('data-theme') !== 'dark') throw Error('Theme preference not persisted');
+  await page.screenshot({ path: 'visual-qa/home-dark-mobile.png', fullPage: true });
+  await context.close();
+  report.push({ name: 'navigation-and-theme', status: 200 });
 } finally {
   await browser.close();
   await writeFile('visual-qa/report.json', JSON.stringify(report, null, 2));
 }
-console.log('Visual QA: ' + report.length + ' viewports passed.');
+console.log('Mobile / desktop browser checks completed: ' + report.length);
