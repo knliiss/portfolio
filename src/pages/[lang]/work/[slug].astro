@@ -12,132 +12,151 @@ export function getStaticPaths() {
 }
 
 const { lang, project } = Astro.props as { lang: Language; project: Project };
-const copy = ui[lang];
+const t = ui[lang];
 const story = narrativeFor(project.slug, lang);
-const text = project.copy[lang];
-const i = projects.findIndex(p => p.slug === project.slug);
-const next = projects[(i + 1) % projects.length];
-const projectName = (slug: string) => slug === 'c7xbotmanager' ? 'C7xBotManager' : slug === 'wavecode' ? 'WaveCode' : slug === 'studium' ? 'Studium' : 'Mnemos';
-const name = projectName(project.slug);
-const nextName = projectName(next.slug);
-const route = lang + '/work/' + project.slug + '/';
+const facts = project.copy[lang];
 const isUk = lang === 'uk';
+const name = ({ mnemos: 'Mnemos', wavecode: 'WaveCode', c7xbotmanager: 'C7xBotManager', studium: 'Studium' } as const)[project.slug];
+const index = projects.findIndex(p => p.slug === project.slug);
+const next = projects[(index + 1) % projects.length];
+const nextName = ({ mnemos: 'Mnemos', wavecode: 'WaveCode', c7xbotmanager: 'C7xBotManager', studium: 'Studium' } as const)[next.slug];
+const route = lang + '/work/' + project.slug + '/';
 const isPublic = project.slug === 'wavecode' || project.slug === 'studium';
-const imageCaptions = isUk ? ['Кабінет викладача', 'Кабінет адміністратора'] : ['Teacher dashboard', 'Administrator dashboard'];
+const galleryLabels = isUk ? ['Кабінет викладача', 'Кабінет адміністратора'] : ['Teacher workspace', 'Administrator workspace'];
+const overviewLabel = isUk ? 'Про проєкт' : 'About the project';
+const contributionLabel = isUk ? 'Моя робота' : 'My contribution';
+const flowLabel = isUk ? 'Приклад реалізації' : 'A closer look';
+const engineeringLabel = isUk ? 'Технічні рішення' : 'Implementation details';
+const resultLabel = isUk ? 'Результат' : 'Outcome';
 ---
-<BaseLayout lang={lang} route={route} title={name + ' — Engineering case study'} description={story.overview}>
+<BaseLayout lang={lang} route={route} title={name + ' — ' + story.label} description={story.introduction[0]}>
   <div class="container">
     <header class="case-top">
-      <a href={pathFor(lang + '/#work')} class="text-link">← {copy.backToWork}</a>
+      <a href={pathFor(lang + '/#work')} class="text-link">← {t.backToWork}</a>
       <div class="case-top-grid">
-        <span class="eyebrow">{project.order} / {story.kicker}</span>
+        <span class="eyebrow">{project.order} / {story.label}</span>
         <div>
           <h1>{name}<span class="heading-period">.</span></h1>
-          <p class="case-intro-text">{text.subtitle}</p>
+          <p class="case-intro-text">{facts.subtitle}</p>
         </div>
       </div>
       <div class="case-quick-facts">
-        <div><span>{copy.role}</span><strong>{text.role}</strong></div>
-        <div><span>{copy.status}</span><strong>{text.status}</strong></div>
-        <div><span>{isUk ? 'Підсумок' : 'In brief'}</span><strong>{text.resultLabel}</strong></div>
+        <div><span>{t.role}</span><strong>{facts.role}</strong></div>
+        <div><span>{t.status}</span><strong>{facts.status}</strong></div>
+        <div><span>{isUk ? 'Коротко' : 'In brief'}</span><strong>{facts.resultLabel}</strong></div>
       </div>
     </header>
 
-    <div class="case-cover">
-      <ProjectVisual project={project} detail />
-    </div>
+    <div class="case-cover"><ProjectVisual project={project} detail /></div>
     <p class="case-cover-caption"><strong>{story.mediaLabel}.</strong> {story.mediaDescription}</p>
 
-    <div class="case-story" aria-label={copy.caseStudy}>
-      <section class="chapter" aria-labelledby="chapter-intro">
-        <span class="chapter-index">01 / {copy.overview}</span>
+    <div class="case-story">
+      <section class="chapter" aria-labelledby="chapter-overview">
+        <span class="chapter-index">{overviewLabel}</span>
         <div class="chapter-body">
-          <h2 id="chapter-intro">{story.overviewHeading}</h2>
-          <p class="chapter-lead">{story.overview}</p>
-          <p>{story.context}</p>
+          <h2 id="chapter-overview">{isUk ? 'Як з’явився проєкт' : 'The project'}</h2>
+          {story.introduction.map((paragraph, i) => <p class={i === 0 ? 'chapter-lead' : ''}>{paragraph}</p>)}
         </div>
       </section>
 
-      <section class="chapter" aria-labelledby="chapter-example">
-        <span class="chapter-index">02 / {isUk ? 'Приклад із практики' : 'An example in practice'}</span>
+      <section class="chapter" aria-labelledby="chapter-contribution">
+        <span class="chapter-index">{contributionLabel}</span>
         <div class="chapter-body">
-          <span class="eyebrow">{story.scenarioLabel}</span>
-          <h2 id="chapter-example">{story.scenarioHeading}</h2>
-          <p class="chapter-lead">{story.scenario}</p>
+          <h2 id="chapter-contribution">{isUk ? 'Що я розробив' : 'What I worked on'}</h2>
+          <ul class="contribution-list">
+            {story.responsibilities.map(point => <li>{point}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section class="chapter" aria-labelledby="chapter-flow">
+        <span class="chapter-index">{flowLabel}</span>
+        <div class="chapter-body">
+          <h2 id="chapter-flow">{story.example.title}</h2>
+          <p class="chapter-lead">{story.example.introduction}</p>
+
           {project.slug === 'wavecode' && (
-            <div class="real-code-block">
-              <div class="real-code-meta"><span>WAVECODE / V1</span><span>36 OPTICAL COLUMNS</span></div>
-              <img src={pathFor('media/wavecode/example.svg')} alt="Actual optically encoded music track generated by the WaveCode Rust encoder" width="960" height="240" loading="lazy" />
-              <div class="real-code-foot">
-                <span>{isUk ? 'Реальний приклад із Rust SDK' : 'Real sample produced by the Rust SDK'}</span>
-                <a href="https://wavecode.knalis.rest/" target="_blank" rel="noopener noreferrer">{isUk ? 'Відсканувати код ↗' : 'Scan this code ↗'}</a>
-              </div>
-            </div>
+            <figure class="real-code-block">
+              <div class="real-code-meta"><span>WAVECODE / V1</span><span>36 COLUMNS</span></div>
+              <img src={pathFor('media/wavecode/example.svg')} alt={isUk ? 'Справжній оптичний код, сформований Rust-бібліотекою WaveCode' : 'Real optically encoded media identity generated by WaveCode Rust'} width="960" height="240" loading="lazy" />
+              <figcaption class="real-code-foot">
+                <span>{isUk ? 'Зразок з офіційної Rust-бібліотеки' : 'Sample from the Rust library'}</span>
+                <a href="https://wavecode.knalis.rest/" target="_blank" rel="noopener noreferrer">{isUk ? 'Перевірити в сканері ↗' : 'Try the scanner ↗'}</a>
+              </figcaption>
+            </figure>
           )}
-          <div class="scenario-steps" aria-label={isUk ? 'Етапи процесу' : 'Process steps'}>
-            {story.steps.map(step => (
+
+          <div class="scenario-steps">
+            {story.example.steps.map((step, i) => (
               <div class="scenario-step">
-                <span class="step-index">{step.number}</span>
+                <span class="step-index">0{i + 1}</span>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
               </div>
             ))}
           </div>
+          <p>{story.example.conclusion}</p>
+
           {project.slug === 'wavecode' && (
             <div class="live-demo-callout">
               <div>
-                <span class="eyebrow">{isUk ? 'Працюючий застосунок' : 'Working application'}</span>
-                <h3>{isUk ? 'Повноцінний сканер і генератор' : 'The full scanner and generator'}</h3>
-                <p>{isUk ? 'Камера, сканування фото, створення коду з посилання та експорт SVG/PNG. Усе працює через офіційний Rust WebAssembly SDK.' : 'Camera scanning, photo import, link encoding and SVG/PNG export, powered by the official Rust WebAssembly SDK.'}</p>
+                <span class="eyebrow">{isUk ? 'Сканер і генератор' : 'Scanner and generator'}</span>
+                <h3>{isUk ? 'Спробувати WaveCode' : 'Use WaveCode'}</h3>
+                <p>{isUk ? 'Живе сканування камерою, імпорт фото, створення кодів та експорт SVG/PNG — у повноцінному вебзастосунку.' : 'Live camera scanning, photo import, code creation and SVG/PNG export are available in the full web app.'}</p>
               </div>
-              <a class="button" href="https://wavecode.knalis.rest/" target="_blank" rel="noopener noreferrer">{isUk ? 'Відкрити WaveCode' : 'Launch WaveCode'} <span aria-hidden="true">↗</span></a>
+              <a class="button" href="https://wavecode.knalis.rest/" target="_blank" rel="noopener noreferrer">{isUk ? 'Відкрити застосунок' : 'Open the app'} <span aria-hidden="true">↗</span></a>
             </div>
           )}
         </div>
       </section>
 
-      <section class="chapter" aria-labelledby="chapter-decisions">
-        <span class="chapter-index">03 / {copy.engineering}</span>
+      <section class="chapter" aria-labelledby="chapter-implementation">
+        <span class="chapter-index">{engineeringLabel}</span>
         <div class="chapter-body">
-          <h2 id="chapter-decisions">{story.decisionsHeading}</h2>
-          <div class="decision-list">
-            {story.decisions.map((decision, index) => (
-              <div class="decision-row">
-                <span class="decision-number">0{index + 1}</span>
-                <h3>{decision.title}</h3>
-                <p>{decision.reason}</p>
-              </div>
+          <h2 id="chapter-implementation">{isUk ? 'Технічні деталі' : 'Inside the implementation'}</h2>
+          <div class="engineering-notes">
+            {story.details.map((detail, i) => (
+              <section class="engineering-note" aria-label={detail.title}>
+                <div class="engineering-note-head">
+                  <span class="step-index">0{i + 1}</span>
+                  <h3>{detail.title}</h3>
+                </div>
+                <div class="engineering-note-text">
+                  {detail.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+                </div>
+              </section>
             ))}
           </div>
           <div class="case-stack">
-            <span class="eyebrow">{copy.coreTech}</span>
+            <span class="eyebrow">{t.coreTech}</span>
             <div class="tag-row">{project.technologies.map(tech => <span>{tech}</span>)}</div>
           </div>
         </div>
       </section>
 
       <section class="chapter" aria-labelledby="chapter-result">
-        <span class="chapter-index">04 / {copy.outcome}</span>
+        <span class="chapter-index">{resultLabel}</span>
         <div class="chapter-body">
-          <h2 id="chapter-result">{story.outcomeHeading}</h2>
-          <p class="chapter-lead">{story.outcome}</p>
-          <p class="case-limits">{story.note}</p>
+          <h2 id="chapter-result">{isUk ? 'Що вийшло' : 'Where it stands'}</h2>
+          {story.outcome.map((paragraph, i) => <p class={i === 0 ? 'chapter-lead' : ''}>{paragraph}</p>)}
           <div class="case-external-links">
-            {isPublic && <a href={project.repo} class="button" target="_blank" rel="noopener noreferrer">{copy.openSource} <span aria-hidden="true">↗</span></a>}
-            {project.secondRepo && <a href={project.secondRepo} target="_blank" rel="noopener noreferrer" class="text-link">{copy.moreProject} <span aria-hidden="true">↗</span></a>}
-            {!isPublic && <span class="private-note">{isUk ? 'Вихідний код приватний; інженерний опис доступний вище.' : 'Source code is private; the engineering case is documented above.'}</span>}
+            {isPublic && <a href={project.repo} class="button" target="_blank" rel="noopener noreferrer">{t.openSource} <span aria-hidden="true">↗</span></a>}
+            {project.secondRepo && <a href={project.secondRepo} class="text-link" target="_blank" rel="noopener noreferrer">{t.moreProject} <span aria-hidden="true">↗</span></a>}
           </div>
         </div>
       </section>
 
       {project.slug === 'studium' && project.gallery && (
-        <section class="case-gallery" aria-label={story.mediaLabel}>
-          <div class="gallery-label"><span class="eyebrow">{isUk ? 'Справжні матеріали' : 'Real project material'}</span><h2>{isUk ? 'Інтерфейси різних ролей.' : 'The interface across roles.'}</h2></div>
+        <section class="case-gallery" aria-labelledby="gallery-title">
+          <div class="gallery-label">
+            <span class="eyebrow">{isUk ? 'Інтерфейс' : 'Interface'}</span>
+            <h2 id="gallery-title">{isUk ? 'Реальні екрани Studium' : 'Studium in use'}</h2>
+          </div>
           <div class="gallery-grid">
             {project.gallery.map((asset, idx) => (
               <figure>
-                <div class="gallery-img"><img src={pathFor(asset)} alt={imageCaptions[idx] + ' of the real Studium application'} loading="lazy" decoding="async" /></div>
-                <figcaption><span>0{idx + 2}</span> {imageCaptions[idx]}</figcaption>
+                <div class="gallery-img"><img src={pathFor(asset)} alt={galleryLabels[idx] + (isUk ? ' — скриншот Studium' : ' — actual Studium screenshot')} loading="lazy" decoding="async" /></div>
+                <figcaption><span>0{idx + 2}</span> {galleryLabels[idx]}</figcaption>
               </figure>
             ))}
           </div>
@@ -146,7 +165,7 @@ const imageCaptions = isUk ? ['Кабінет викладача', 'Кабіне
     </div>
 
     <a class="case-next" href={pathFor(lang + '/work/' + next.slug + '/')}>
-      <span class="case-next-copy"><small class="eyebrow">{copy.nextProject}</small><strong>{nextName}</strong></span>
+      <span class="case-next-copy"><small class="eyebrow">{t.nextProject}</small><strong>{nextName}</strong></span>
       <span class="case-next-arrow" aria-hidden="true">↗</span>
     </a>
   </div>
