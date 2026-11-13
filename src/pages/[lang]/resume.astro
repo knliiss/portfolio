@@ -6,12 +6,13 @@ const lang = Astro.params.lang as Language;
 const copy = ui[lang];
 const items = projects.map(p => ({ ...p, text: p.copy[lang] }));
 const route = lang + '/resume/';
+import ArrowIcon from '../../components/ArrowIcon.astro';
 ---
 <BaseLayout lang={lang} route={route} title={copy.resumeTitle} description={copy.resumeSummary} noindex>
   <div class="container resume-page">
     <div class="resume-actions">
-      <a href={pathFor(lang + '/')} class="backlink">← {copy.notFoundBack}</a>
-      <button type="button" class="button" id="print-resume">{copy.printResume}<span aria-hidden="true">↗</span></button>
+      <a href={pathFor(lang + '/')} class="backlink"><ArrowIcon direction="left" /> {copy.notFoundBack}</a>
+      <button type="button" class="button" id="print-resume">{copy.printResume}<ArrowIcon direction="down" /></button>
     </div>
     <article class="resume-paper" aria-label="Vitalii Lototskyi resume">
       <h1>{profile.name}</h1>

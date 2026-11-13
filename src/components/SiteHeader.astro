@@ -7,6 +7,7 @@ const alternate = route.replace(new RegExp('^' + lang + '/'), alternateLanguage(
 const home = pathFor(lang + '/');
 const mobileMenuLabel = lang === 'uk' ? 'Відкрити навігацію' : 'Open navigation';
 const resumeLabel = copy.viewResume;
+import ArrowIcon from './ArrowIcon.astro';
 ---
 <header class="site-header">
   <div class="container header-inner">
@@ -35,10 +36,10 @@ const resumeLabel = copy.viewResume;
           </svg>
         </summary>
         <nav class="mobile-menu-panel" aria-label={lang === 'uk' ? 'Мобільна навігація' : 'Mobile navigation'}>
-          <a href={home + '#work'}>{copy.navWork}<span aria-hidden="true">↗</span></a>
-          <a href={home + '#about'}>{copy.navAbout}<span aria-hidden="true">↗</span></a>
-          <a href={home + '#contact'}>{copy.navContact}<span aria-hidden="true">↗</span></a>
-          <a href={pathFor(lang + '/resume/')}>{resumeLabel}<span aria-hidden="true">↗</span></a>
+          <a href={home + '#work'}>{copy.navWork}<ArrowIcon direction="right" size={17} /></a>
+          <a href={home + '#about'}>{copy.navAbout}<ArrowIcon direction="right" size={17} /></a>
+          <a href={home + '#contact'}>{copy.navContact}<ArrowIcon direction="right" size={17} /></a>
+          <a href={pathFor(lang + '/resume/')}>{resumeLabel}<ArrowIcon direction="right" size={17} /></a>
         </nav>
       </details>
     </div>

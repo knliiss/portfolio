@@ -263,3 +263,27 @@
   .mobile-menu { display: none !important; }
   .resume-paper { box-shadow: none; }
 }
+
+/* Mobile action hierarchy and legibility. */
+@media screen and (max-width: 600px) {
+  .mobile-menu-panel a .action-icon { width: 17px; height: 17px; opacity: .65; }
+  .site-footer .footer-links { row-gap: 0; }
+  .site-footer .footer-links a { min-height: 44px; font-size: 13px; }
+  .showcase-info .text-link { font-size: 14px; }
+  .new-hero-actions .text-link { font-size: 14px; }
+  .case-next-arrow { width: 44px; height: 44px; flex: 0 0 44px; }
+  .case-next-arrow .action-icon { width: 30px; height: 30px; }
+  .project-art--c7x { min-height: 445px; }
+  .project-art--detail.project-art--c7x { min-height: 505px; }
+  .project-art--c7x .c7x-layer strong { font-size: 14px; }
+  .project-art--c7x .c7x-layer small { font-size: 12px; line-height: 1.45; }
+  .project-art--c7x .c7x-layer { padding: 10px 0; }
+  .case-gallery .gallery-img { cursor: zoom-in; }
+  .focus-row h3, .recognition-item h3 { line-height: 1.25; }
+}
+@media screen and (max-width: 380px) {
+  .project-art--c7x { min-height: 455px; }
+  .project-art--detail.project-art--c7x { min-height: 505px; }
+  .project-art--c7x .c7x-layer small { font-size: 11px; }
+  .case-next-copy { min-width: 0; }
+}

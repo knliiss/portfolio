@@ -391,7 +391,7 @@ button { font: inherit; cursor: pointer; }
 .project-art--detail .mnemos-device { max-width: 330px; height: 510px; margin-bottom: -55px; }
 .contribution-list { list-style: none; padding: 0; margin: 39px 0 0; border-top: 1px solid var(--line); }
 .contribution-list li { position: relative; padding: 22px 0 22px 33px; border-bottom: 1px solid var(--line); font-size: clamp(15px,1.35vw,18px); line-height: 1.65; color: var(--ink); }
-.contribution-list li::before { content: "↗"; position: absolute; left: 0; top: 21px; font-size: 17px; }
+ .contribution-list li::before { content: ""; position: absolute; left: 0; top: 32px; width: 6px; height: 6px; background: var(--ink); border-radius: 50%; }
 .engineering-notes { border-top: 1px solid var(--line); margin-top: 44px; }
 .engineering-note { display: grid; grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr); gap: clamp(20px,4vw,50px); border-bottom: 1px solid var(--line); padding: 34px 0; }
 .engineering-note-head { display: flex; flex-direction: column; gap: 18px; }
@@ -421,3 +421,17 @@ button { font: inherit; cursor: pointer; }
   .project-art--detail .mnemos-device { height: 315px; max-width: 210px; margin-bottom: -25px; }
   .mnemos-capture-image { max-height: none; }
 }
+
+/* Shared vector navigation affordances: arrow glyphs depend on OS fonts and are avoided. */
+.action-icon { display: inline-block; vertical-align: middle; width: 18px; height: 18px; flex: 0 0 auto; transition: transform .22s var(--ease); }
+.text-link, .button, .backlink { white-space: normal; }
+.text-link .action-icon, .button .action-icon { width: 17px; height: 17px; }
+.text-link:hover .action-icon--right, .button:hover .action-icon--right { transform: translateX(3px); }
+.text-link:hover .action-icon--up-right, .button:hover .action-icon--up-right { transform: translate(2px,-2px); }
+.text-link:hover .action-icon--down, .button:hover .action-icon--down { transform: translateY(3px); }
+.backlink { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; }
+.backlink .action-icon { width: 17px; height: 17px; }
+.case-next-arrow { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; }
+.case-next-arrow .action-icon { width: 42px; height: 42px; }
+.real-code-foot a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; }
+.real-code-foot .action-icon { width: 15px; height: 15px; }
