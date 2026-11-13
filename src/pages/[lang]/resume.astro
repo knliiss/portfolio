@@ -32,7 +32,12 @@ const route = lang + '/resume/';
       <h2>{copy.resumeExperiences}</h2>
       {items.map(({slug,repo,technologies,text}) => (
         <div class="resume-block">
-          <div class="resume-block-title"><a href={repo}>{slug === 'c7xbotmanager' ? 'C7xBotManager' : slug === 'wavecode' ? 'WaveCode' : slug === 'studium' ? 'Studium' : 'Mnemos'}</a><span>{text.role}</span></div>
+          <div class="resume-block-title">
+            {slug === 'mnemos' || slug === 'c7xbotmanager' ?
+              <span>{slug === 'mnemos' ? 'Mnemos' : 'C7xBotManager'}</span> :
+              <a href={repo}>{slug === 'wavecode' ? 'WaveCode' : 'Studium'}</a>}
+            <span>{text.role}</span>
+          </div>
           <div class="resume-block-sub">{technologies.slice(0, 4).join(' · ')}</div>
           <p>{text.description} {text.resultLabel}.</p>
         </div>
