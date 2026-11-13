@@ -295,3 +295,33 @@
     border-color: transparent;
   }
 }
+
+/* Natural page flow on phones: the header is not sticky. */
+@media screen and (max-width: 900px) {
+  .site-header { position: static; top: auto; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  html { scroll-padding-top: 18px; }
+  .showcase-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "heading" "image" "details";
+    row-gap: 0;
+    align-items: start;
+  }
+  .showcase-info { display: contents; }
+  .showcase-summary { display: block; grid-area: heading; padding: 0 0 22px; min-width: 0; }
+  .showcase-summary h3 { margin-top: 13px; }
+  .showcase-art, .showcase-item:nth-child(even) .showcase-art {
+    grid-area: image; order: initial !important; min-width: 0;
+  }
+  .showcase-details { display: block; grid-area: details; padding-top: 23px; min-width: 0; }
+  .showcase-details .showcase-lede { margin-top: 0; }
+  .showcase-actions { display: flex; gap: 14px 24px; flex-wrap: wrap; align-items: center; }
+  .showcase-secondary-link { color: var(--muted); }
+}
+@media screen and (max-width: 600px) {
+  .showcase-summary { padding-bottom: 17px; }
+  .showcase-summary h3 { margin-top: 11px; }
+  .showcase-details { padding-top: 19px; }
+  .showcase-actions { gap: 8px 20px; }
+  .case-top-actions { flex-direction: column; align-items: flex-start; gap: 6px; }
+}

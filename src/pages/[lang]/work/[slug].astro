@@ -39,7 +39,12 @@ import ArrowIcon from '../../../components/ArrowIcon.astro';
 <BaseLayout lang={lang} route={route} title={name + ' — ' + story.label} description={story.introduction[0]}>
   <div class="container">
     <header class="case-top">
-      <a href={pathFor(lang + '/#work')} class="text-link"><ArrowIcon direction="left" /> {t.backToWork}</a>
+      <div class="case-top-actions">
+        <a href={pathFor(lang + '/#work')} class="text-link"><ArrowIcon direction="left" /> {t.backToWork}</a>
+        {project.slug === 'wavecode' && (
+          <a class="text-link" href="https://wavecode.knalis.rest/" target="_blank" rel="noopener noreferrer">{isUk ? 'Відкрити WaveCode' : 'Open WaveCode'} <ArrowIcon direction="up-right" /></a>
+        )}
+      </div>
       <div class="case-top-grid">
         <span class="eyebrow">{project.order} / {story.label}</span>
         <div>

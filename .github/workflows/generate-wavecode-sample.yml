@@ -1,0 +1,58 @@
+name: Generate and verify portfolio WaveCode sample
+on:
+  push:
+    paths:
+      - .github/workflows/generate-wavecode-sample.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  encode:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/checkout@v4
+        with:
+          repository: knliiss/WaveCode
+          path: _wavecode_sdk
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: _wavecode_sdk -> target
+      - name: Generate Rickroll media link with the official encoder
+        working-directory: _wavecode_sdk
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo run --quiet -p wavecode -- encode \
+            'https://www.youtube.com/watch?v=dQw4w9WgXcQ' \
+            --svg "$GITHUB_WORKSPACE/public/media/wavecode/example.svg" \
+            --png "$RUNNER_TEMP/rickroll-wavecode.png"
+      - name: Confirm SVG and raster scanner recover the intended video
+        working-directory: _wavecode_sdk
+        shell: bash
+        run: |
+          set -euo pipefail
+          svg_result="$(cargo run --quiet -p wavecode -- decode-svg "$GITHUB_WORKSPACE/public/media/wavecode/example.svg")"
+          echo "$svg_result"
+          [[ "$svg_result" == *"dQw4w9WgXcQ"* ]] || { echo "Wrong URL in SVG"; exit 1; }
+          png_result="$(cargo run --quiet -p wavecode -- scan "$RUNNER_TEMP/rickroll-wavecode.png")"
+          echo "$png_result"
+          [[ "$png_result" == *"dQw4w9WgXcQ"* ]] || { echo "Raster scan did not recover video"; exit 1; }
+          echo "verified WaveCode Rickroll payload and raster scanning"
+      - name: Commit the verified optical sample
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/media/wavecode/example.svg
+          if git diff --cached --quiet; then
+            echo "Code unchanged"
+            exit 0
+          fi
+          git commit -m "assets: encode Rickroll in real WaveCode sample"
+          git push origin HEAD:main

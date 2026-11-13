@@ -435,3 +435,26 @@ button { font: inherit; cursor: pointer; }
 .case-next-arrow .action-icon { width: 42px; height: 42px; }
 .real-code-foot a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; }
 .real-code-foot .action-icon { width: 15px; height: 15px; }
+
+/* A consistent neutral gallery palette. Product screenshots keep their native colors. */
+.project-art--mnemos {
+  background: #ededed;
+  color: #171717;
+}
+.project-art--mnemos .mnemos-visual-tag,
+.project-art--mnemos .mnemos-visual-footnote { color: #5d5d5d; }
+.project-art--mnemos .mnemos-device {
+  background: #151515;
+  border-color: #424242;
+  box-shadow: -12px -12px 30px rgba(0, 0, 0, .12);
+}
+.project-art--mnemos .mnemos-device-top {
+  border-bottom-color: #484848;
+  color: #d7d7d7;
+}
+.project-art--mnemos .mnemos-device-top i { background: #999; }
+.project-art--mnemos .art-bottom { opacity: .72; }
+.showcase-summary, .showcase-details { display: contents; }
+.showcase-actions { display: flex; gap: 12px 23px; flex-wrap: wrap; align-items: center; }
+.showcase-secondary-link { color: var(--muted); }
+.case-top-actions { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px 22px; }
