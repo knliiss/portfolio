@@ -1,0 +1,41 @@
+name: Vendor public project screenshots
+on:
+  push:
+    paths:
+      - .github/workflows/vendor-media.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download and verify Studium screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/media/studium
+          base="https://raw.githubusercontent.com/knliiss/Studium/master/docs/screenshots"
+          curl -fsSL --retry 3 "$base/01_student_dashboard.png" -o public/media/studium/student.png
+          curl -fsSL --retry 3 "$base/15_teacher_dashboard.png" -o public/media/studium/teacher.png
+          curl -fsSL --retry 3 "$base/27_admin_dashboard.png" -o public/media/studium/admin.png
+          file public/media/studium/*.png
+          python3 - <<'PY'
+          from pathlib import Path
+          for p in Path("public/media/studium").glob("*.png"):
+              if p.read_bytes()[:8] != bytes.fromhex("89504e470d0a1a0a"):
+                  raise SystemExit(f"Not a PNG: {p}")
+              if p.stat().st_size < 10000:
+                  raise SystemExit(f"PNG unexpectedly small: {p}")
+          PY
+      - name: Commit source-owned screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/media/studium/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "assets: vendor verified Studium screenshots"
+          git push origin HEAD:main
