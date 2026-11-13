@@ -25,6 +25,7 @@ export type Project = {
   repo: string;
   secondRepo?: string;
   cover?: string;
+  live?: string;
   gallery?: string[];
   metric?: string;
   visual: 'mnemos' | 'wavecode' | 'c7x' | 'studium';
@@ -175,12 +176,7 @@ export const projects: Project[] = [
     order: '01',
     technologies: ['Kotlin', 'Spring Boot', 'Apache Kafka', 'PostgreSQL', 'Redis', 'Keycloak', 'React'],
     repo: 'https://github.com/knliiss/Mnemos',
-    cover: 'https://raw.githubusercontent.com/knliiss/Mnemos/master/docs/assets/readme/home.webp',
-    gallery: [
-      'https://raw.githubusercontent.com/knliiss/Mnemos/master/docs/assets/readme/events.webp',
-      'https://raw.githubusercontent.com/knliiss/Mnemos/master/docs/assets/readme/event-detail.webp'
-    ],
-    metric: '~150',
+        metric: '~150',
     visual: 'mnemos',
     copy: {
       en: {
@@ -223,20 +219,21 @@ export const projects: Project[] = [
     technologies: ['Rust', 'WebAssembly', 'TypeScript', 'React'],
     repo: 'https://github.com/knliiss/WaveCode',
     secondRepo: 'https://github.com/knliiss/WaveCode-Web',
-    cover: 'https://raw.githubusercontent.com/knliiss/WaveCode/main/assets/brand/wavecode-mark.svg',
+    cover: 'media/wavecode/example.svg',
+    live: 'https://wavecode.knalis.rest/',
     visual: 'wavecode',
     copy: {
       en: {
         category: 'Systems programming / Open source',
-        subtitle: 'An optical code for music links, designed as a cross-platform format and SDK.',
-        description: 'WaveCode encodes a supported track identity and optional timestamp into a compact optical mark. The Rust core powers a CLI, native bindings and a mobile-first browser scanner.',
+        subtitle: 'An optical format and cross-platform SDK for music and video links.',
+        description: 'WaveCode encodes supported media identities and optional native timestamps into a compact optical mark. The Rust core powers a CLI, native bindings and a mobile-first browser scanner.',
         challengeTitle: 'The challenge',
         challenge: 'Represent music references from different services in a small visual code that can be decoded reliably, without a proprietary link database or duplicated implementations across platforms.',
         solutionTitle: 'The engineering',
         solution: 'Developed the optical encoding format and Rust library, including versioning, CRC validation, Reed–Solomon error correction and image decoding. Exposed native/FFI and WebAssembly interfaces; the separate React/TypeScript web application uses the same Rust decoder for on-device scanning.',
         resultsTitle: 'Current state',
         results: 'The library, command-line tools and web scanner are functional and under active improvement. The optical scanner remains experimental and success varies with image quality.',
-        highlights: ['Deterministic optical encoding for seven music platforms', 'Shared Rust implementation across native and WebAssembly targets', 'Mobile-first camera, image scanning and code generation'],
+        highlights: ['Deterministic optical encoding for supported music and video services', 'Shared Rust implementation across native and WebAssembly targets', 'Mobile-first camera, image scanning and code generation'],
         resultLabel: 'Open-source SDK + scanner',
         role: 'Creator / sole developer',
         status: 'Active development',
@@ -244,15 +241,15 @@ export const projects: Project[] = [
       },
       uk: {
         category: 'Системне програмування / Open source',
-        subtitle: 'Оптичний код для музичних посилань, розроблений як кросплатформний формат і SDK.',
-        description: 'WaveCode кодує ідентифікатор треку та необов’язковий таймкод у компактний оптичний знак. Rust-ядро використовується CLI, нативними прив’язками та мобільним вебсканером.',
+        subtitle: 'Оптичний формат та кросплатформний SDK для музичних і відеопосилань.',
+        description: 'WaveCode кодує ідентифікатори підтримуваних медіа та необов’язкові таймкоди у компактний оптичний знак. Rust-ядро використовується CLI, нативними прив’язками та мобільним вебсканером.',
         challengeTitle: 'Задача',
         challenge: 'Подати посилання з різних музичних сервісів у невеликому візуальному коді, який можна надійно декодувати без власної бази ідентифікаторів та дублювання алгоритмів між платформами.',
         solutionTitle: 'Технічне рішення',
         solution: 'Розробив формат і Rust-бібліотеку з версіонуванням, CRC-перевіркою, корекцією помилок Reed–Solomon та розпізнаванням зображень. Надав нативні/FFI та WebAssembly інтерфейси. Окремий застосунок на React/TypeScript використовує той самий Rust-декодер локально в браузері.',
         resultsTitle: 'Поточний стан',
         results: 'Бібліотека, CLI та вебсканер працюють і активно вдосконалюються. Оптичне розпізнавання поки експериментальне й залежить від якості зображення.',
-        highlights: ['Детерміноване кодування для семи музичних платформ', 'Спільна реалізація на Rust для native та WebAssembly', 'Мобільне сканування камерою й генерація кодів'],
+        highlights: ['Детерміноване кодування для музики та вибраних відеоплатформ', 'Спільна реалізація на Rust для native та WebAssembly', 'Мобільне сканування камерою й генерація кодів'],
         resultLabel: 'Open-source SDK та сканер',
         role: 'Автор і розробник',
         status: 'Активна розробка',
@@ -307,10 +304,10 @@ export const projects: Project[] = [
     order: '04',
     technologies: ['Java', 'Spring Boot', 'React', 'TypeScript', 'PostgreSQL', 'Kafka'],
     repo: 'https://github.com/knliiss/Studium',
-    cover: 'https://raw.githubusercontent.com/knliiss/Studium/master/docs/screenshots/01_student_dashboard.png',
+    cover: 'media/studium/student.png',
     gallery: [
-      'https://raw.githubusercontent.com/knliiss/Studium/master/docs/screenshots/15_teacher_dashboard.png',
-      'https://raw.githubusercontent.com/knliiss/Studium/master/docs/screenshots/27_admin_dashboard.png'
+      'media/studium/teacher.png',
+      'media/studium/admin.png'
     ],
     visual: 'studium',
     copy: {
