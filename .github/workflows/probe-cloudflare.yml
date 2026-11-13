@@ -1,0 +1,43 @@
+name: Probe Cloudflare production
+on:
+  push:
+    paths:
+      - .github/workflows/probe-cloudflare.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    name: Compare Pages and custom domain
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Request both public origins
+        shell: bash
+        run: |
+          set -uo pipefail
+          for origin in https://portfolio-1bt.pages.dev https://portfolio.knalis.rest; do
+            echo "::group::Checking $origin"
+            for path in /__build.json /en/; do
+              outfile="$(mktemp)"
+              headers="$(mktemp)"
+              code="$(curl --silent --show-error --location --max-time 20 --output "$outfile" --dump-header "$headers" --write-out '%{http_code}' "$origin$path" || true)"
+              echo "URL: $origin$path"
+              echo "HTTP: $code"
+              grep -iE '^(cache-control|cf-cache-status|age|server|content-type):' "$headers" || true
+              if [ "$path" = "/__build.json" ]; then
+                head -c 900 "$outfile" || true
+                echo
+              elif grep -q 'Backend systems. Software products.' "$outfile"; then
+                echo "PAGE VERSION: updated headline detected"
+              elif grep -q 'I build software products and backend systems' "$outfile"; then
+                echo "PAGE VERSION: old headline detected"
+              else
+                echo "PAGE VERSION: neither expected headline detected"
+              fi
+              rm -f "$outfile" "$headers"
+            done
+            echo "::endgroup::"
+          done
