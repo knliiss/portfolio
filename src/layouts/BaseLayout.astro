@@ -78,11 +78,14 @@ const schema = {
         mobileMenu.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => { mobileMenu.open = false; });
         });
-        mobileMenu.addEventListener('keydown', event => {
-          if (event.key === 'Escape') {
+        document.addEventListener('keydown', event => {
+          if (event.key === 'Escape' && mobileMenu.open) {
             mobileMenu.open = false;
             mobileMenu.querySelector('summary')?.focus();
           }
+        });
+        window.addEventListener('resize', () => {
+          if (window.innerWidth > 900 && mobileMenu.open) mobileMenu.open = false;
         });
         document.addEventListener('pointerdown', event => {
           if (mobileMenu.open && event.target instanceof Node && !mobileMenu.contains(event.target)) {
