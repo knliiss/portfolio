@@ -25,7 +25,7 @@ test('WaveCode visual contains actual Rust-generated optical frame', () => {
   const svg = readFileSync('public/media/wavecode/example.svg', 'utf8');
   assert.ok((svg.match(/<rect /g) || []).length >= 70);
   assert.match(svg, /wavecode-upper/);
-  assert.match(html, /media\/wavecode\/example\.svg/);
+  assert.match(html, /media\/wavecode\/example\.svg\?v=2/);
 });
 
 test('private repository images are never referenced by public-facing site', () => {
