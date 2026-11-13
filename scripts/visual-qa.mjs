@@ -54,6 +54,41 @@ try {
       throw Error(JSON.stringify({ name, status: response?.status(), stats, errors }, null, 2));
     }
     if (width <= 900) {
+      const headerPosition = await page.locator('.site-header').evaluate(el => getComputedStyle(el).position);
+      if (headerPosition !== 'static') throw Error('Header still sticks on phones: ' + name + ' (' + headerPosition + ')');
+
+      if (route === '/en/' || route === '/uk/') {
+        const placements = await page.locator('.showcase-item').evaluateAll(cards =>
+          cards.map(card => {
+            const summary = card.querySelector('.showcase-summary')?.getBoundingClientRect();
+            const art = card.querySelector('.showcase-art')?.getBoundingClientRect();
+            const details = card.querySelector('.showcase-details')?.getBoundingClientRect();
+            return { titleBottom: summary?.bottom, imageTop: art?.top, imageBottom: art?.bottom, detailsTop: details?.top };
+          })
+        );
+        if (placements.length !== 4 || placements.some(pos =>
+          pos.titleBottom === undefined || pos.imageTop === undefined ||
+          pos.imageBottom === undefined || pos.detailsTop === undefined ||
+          pos.titleBottom > pos.imageTop + 1 || pos.imageBottom > pos.detailsTop + 1
+        )) throw Error('Mobile project card order is incorrect: ' + name + ' ' + JSON.stringify(placements));
+
+        const liveHref = await page.locator('.showcase-item').nth(1).locator('.showcase-art').getAttribute('href');
+        if (liveHref !== 'https://wavecode.knalis.rest/') throw Error('WaveCode card does not directly open the application');
+
+        const mnemosBackground = await page.locator('.project-art--mnemos').first().evaluate(el => getComputedStyle(el).backgroundColor);
+        if (mnemosBackground !== 'rgb(237, 237, 237)') throw Error('Mnemos cover is not neutral: ' + mnemosBackground);
+
+        await page.evaluate(() => {
+          document.documentElement.style.scrollBehavior = 'auto';
+          window.scrollTo(0, 650);
+        });
+        const headerLocation = await page.locator('.site-header').evaluate(el => el.getBoundingClientRect().bottom);
+        if (headerLocation > -5) throw Error('Mobile header remains on screen during page scroll: ' + name);
+        await page.evaluate(() => {
+          window.scrollTo(0, 0);
+          document.documentElement.style.scrollBehavior = '';
+        });
+      }
       const desktopNavigation = page.locator('.site-nav');
       if (await desktopNavigation.isVisible()) throw Error('Desktop navigation visible on mobile: ' + name);
       const summary = page.locator('#mobile-menu summary');
