@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - .github/workflows/visual-qa.yml
+      - 'src/**'
+      - 'public/media/**'
+      - 'tests/**'
   workflow_dispatch:
 permissions:
   contents: read

@@ -7,9 +7,6 @@ interface Props {
   detail?: boolean;
 }
 const { project, detail = false } = Astro.props;
-const label = project.slug === 'c7xbotmanager' ? 'C7xBotManager' :
-  project.slug === 'wavecode' ? 'WaveCode' :
-  project.slug === 'studium' ? 'Studium' : 'Mnemos';
 ---
 <div class={'project-art project-art--' + project.visual + (detail ? ' project-art--detail' : '')}>
   {project.visual === 'mnemos' && (

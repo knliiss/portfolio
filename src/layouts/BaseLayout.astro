@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { ui, profile, pathFor, type Language, alternateLanguage } from '../data/content';
+import { profile, pathFor, type Language, alternateLanguage } from '../data/content';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
@@ -12,7 +12,6 @@ interface Props {
   noindex?: boolean;
 }
 const { lang, title, description, route, noindex = false } = Astro.props;
-const copy = ui[lang];
 const altLang = alternateLanguage(lang);
 const altRoute = route.replace(new RegExp('^' + lang + '/'), altLang + '/');
 const canonical = new URL(pathFor(route), Astro.site ?? 'https://knliiss.github.io').toString();
