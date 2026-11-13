@@ -68,7 +68,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       ],
       outcome: [
         'Mnemos is an independently built product that people actually use, with functionality extending well beyond its original event feed. I maintain the codebase, deploy changes and handle failures and regressions.',
-        'The repository is private. The screen shown on this page is a real capture of the application; the technical material describes the implementation without exposing private configuration.'
+        'The account screen brings together features backed by different services: live events, the account, the wallet, team membership and recent activity.'
       ],
       mediaLabel: 'Mnemos application',
       mediaDescription: 'Actual account home screen from the running product.'
@@ -120,7 +120,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       ],
       outcome: [
         'Mnemos — продукт, який вийшов за межі початкової стрічки подій і має реальних користувачів. Я продовжую підтримувати його, розгортати зміни й виправляти проблеми, що виникають під час експлуатації.',
-        'Репозиторій приватний. На сторінці показаний справжній екран застосунку, а технічний опис не містить приватної конфігурації.'
+        'На головному екрані поєднані функції різних сервісів: актуальні події, акаунт, гаманець, команда та остання активність.'
       ],
       mediaLabel: 'Застосунок Mnemos',
       mediaDescription: 'Справжній екран головної сторінки акаунта.'
@@ -280,7 +280,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       ],
       outcome: [
         'The product reached roughly ten paying users and supported configurations with up to 500 active client sessions. I continued developing it as both a networked runtime and a practical desktop tool.',
-        'The source repository is private and I do not have a usable UI screenshot. This portfolio therefore shows the architecture and the actual implementation responsibilities instead of a fictional application image.'
+        'Protocol compatibility also requires ongoing work: packet handling, authentication and state transitions have to be adapted when the external service changes.'
       ],
       mediaLabel: 'C7xBotManager architecture',
       mediaDescription: 'A simplified view of real implementation layers; no invented UI screenshot.'
@@ -332,7 +332,7 @@ export const narratives: Record<ProjectSlug, Record<Language, Narrative>> = {
       ],
       outcome: [
         'Програма мала приблизно десять платних користувачів і підтримувала конфігурації до 500 активних клієнтів. Я розвивав її і як мережевий runtime, і як десктопний інструмент.',
-        'Репозиторій приватний, а придатного скриншота інтерфейсу немає. Тому на портфоліо показана структура системи й конкретні реалізовані механізми, без вигаданих зображень програми.'
+        'Підтримка сумісності протоколу також стала частиною розробки: після змін зовнішнього сервісу потрібно адаптувати пакети, автентифікацію та переходи станів.'
       ],
       mediaLabel: 'Архітектура C7xBotManager',
       mediaDescription: 'Спрощений огляд реальних модулів; без вигаданих скриншотів.'
