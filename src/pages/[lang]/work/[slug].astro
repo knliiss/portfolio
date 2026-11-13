@@ -23,6 +23,12 @@ const nextName = ({ mnemos: 'Mnemos', wavecode: 'WaveCode', c7xbotmanager: 'C7xB
 const route = lang + '/work/' + project.slug + '/';
 const isPublic = project.slug === 'wavecode' || project.slug === 'studium';
 const galleryLabels = isUk ? ['Кабінет викладача', 'Кабінет адміністратора'] : ['Teacher workspace', 'Administrator workspace'];
+const introductionHeadings = {
+  mnemos: { en: 'Realtime events and everything around them', uk: 'Події, підписки та інші функції Mnemos' },
+  wavecode: { en: 'An optical format for media links', uk: 'Оптичний формат для медіапосилань' },
+  c7xbotmanager: { en: 'Managing headless clients without a full game', uk: 'Керування headless-клієнтами без запуску гри' },
+  studium: { en: 'An LMS with distinct student and teacher workflows', uk: 'Навчальна платформа для різних ролей' }
+};
 const overviewLabel = isUk ? 'Про проєкт' : 'About the project';
 const contributionLabel = isUk ? 'Моя робота' : 'My contribution';
 const flowLabel = isUk ? 'Приклад реалізації' : 'A closer look';
@@ -54,7 +60,7 @@ const resultLabel = isUk ? 'Результат' : 'Outcome';
       <section class="chapter" aria-labelledby="chapter-overview">
         <span class="chapter-index">{overviewLabel}</span>
         <div class="chapter-body">
-          <h2 id="chapter-overview">{isUk ? 'Як з’явився проєкт' : 'The project'}</h2>
+          <h2 id="chapter-overview">{introductionHeadings[project.slug][lang]}</h2>
           {story.introduction.map((paragraph, i) => <p class={i === 0 ? 'chapter-lead' : ''}>{paragraph}</p>)}
           {project.slug === 'mnemos' && (
             <figure class="mnemos-capture">
